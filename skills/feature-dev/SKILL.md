@@ -1,43 +1,43 @@
 ---
 name: feature-dev
-description: Workflow completo de desenvolvimento de features — do discovery a entrega com 7 fases
- type: flow
+description: Complete feature development workflow — from discovery to delivery in 7 phases
+type: flow
 ---
 
 # Feature Development Workflow
 
-Workflow de desenvolvimento de features com 7 fases, orquestrando múltiplos agents do EKC.
+Feature development workflow with 7 phases, orchestrating multiple EKC agents.
 
 ```mermaid
 flowchart TD
-    A([BEGIN]) --> B[Discovery<br/>Entenda o contexto e objetivo da feature]
-    B --> C[Exploration<br/>Explore o codebase existente]
-    C --> D[Questions<br/>Faça perguntas clarificadoras ao usuário]
-    D --> E{Usuário responde?}
-    E -->|Sim| F[Architecture<br/>Proponha a arquitetura e design]
-    E -->|Não| D
-    F --> G{Usuário aprova?}
-    G -->|Sim| H[Implementation<br/>Implemente a feature]
-    G -->|Não| F
-    H --> I[Review<br/>Revise qualidade, segurança e performance]
-    I --> J{Passou na review?}
-    J -->|Não| H
-    J -->|Sim| K[Summary<br/>Documente o que foi feito]
+    A([BEGIN]) --> B[Discovery<br/>Understand the context and goal of the feature]
+    B --> C[Exploration<br/>Explore the existing codebase]
+    C --> D[Questions<br/>Ask clarifying questions to the user]
+    D --> E{User responds?}
+    E -->|Yes| F[Architecture<br/>Propose architecture and design]
+    E -->|No| D
+    F --> G{User approves?}
+    G -->|Yes| H[Implementation<br/>Implement the feature]
+    G -->|No| F
+    H --> I[Review<br/>Review quality, security and performance]
+    I --> J{Passed review?}
+    J -->|No| H
+    J -->|Yes| K[Summary<br/>Document what was done]
     K --> L([END])
 ```
 
-## Instruções por nó
+## Instructions per node
 
-**Discovery**: Use `code-explorer` para entender o contexto do projeto.
+**Discovery**: Use `code-explorer` to understand the project context.
 
-**Exploration**: Use `code-explorer` + `architect` para mapear o codebase.
+**Exploration**: Use `code-explorer` + `architect` to map the codebase.
 
-**Questions**: Use `AskUserQuestion` para levantar requisitos faltantes.
+**Questions**: Use `AskUserQuestion` to raise missing requirements.
 
-**Architecture**: Use `architect` ou `code-architect` para propor a solução. Aguarde aprovação.
+**Architecture**: Use `architect` or `code-architect` to propose the solution. Wait for approval.
 
-**Implementation**: Use `coder` subagent ou implemente diretamente. Siga TDD quando possível.
+**Implementation**: Use `coder` subagent or implement directly. Follow TDD when possible.
 
-**Review**: Use `code-reviewer`, `security-reviewer` e `type-design-analyzer` para validar.
+**Review**: Use `code-reviewer`, `security-reviewer` and `type-design-analyzer` to validate.
 
-**Summary**: Use `doc-updater` para atualizar documentação.
+**Summary**: Use `doc-updater` to update documentation.

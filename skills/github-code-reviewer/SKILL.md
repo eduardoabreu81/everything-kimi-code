@@ -1,49 +1,49 @@
 ---
 name: github-code-reviewer
-description: Review de PR no GitHub com 5 revisores paralelos + scoring 0-100
- type: flow
+description: GitHub PR review with 5 parallel reviewers + 0-100 scoring
+type: flow
 ---
 
 # GitHub Code Review Workflow
 
-Review automatizado de PR no GitHub usando GitHub CLI (`gh`), com scoring de confiança.
+Automated GitHub PR review using GitHub CLI (`gh`), with confidence scoring.
 
 ```mermaid
 flowchart TD
-    A([BEGIN]) --> B[Check Eligibility<br/>Verifique se gh CLI esta instalado e autenticado]
-    B --> C{Elegivel?}
-    C -->|Não| D[Abort<br/>Informe o usuario para instalar gh CLI]
-    C -->|Sim| E[View PR<br/>Colete informacoes do PR via gh pr view]
-    E --> F[Read Context<br/>Leia CLAUDE.md / AGENTS.md do projeto]
-    F --> G[Parallel Review<br/>Execute 5 revisores em paralelo]
-    G --> H[Scoring<br/>Pontue o PR 0-100 baseado na rubrica]
+    A([BEGIN]) --> B[Check Eligibility<br/>Verify gh CLI is installed and authenticated]
+    B --> C{Eligible?}
+    C -->|No| D[Abort<br/>Inform user to install gh CLI]
+    C -->|Yes| E[View PR<br/>Collect PR info via gh pr view]
+    E --> F[Read Context<br/>Read CLAUDE.md / AGENTS.md from project]
+    F --> G[Parallel Review<br/>Execute 5 reviewers in parallel]
+    G --> H[Scoring<br/>Score the PR 0-100 based on rubric]
     H --> I{Score >= 80?}
-    I -->|Sim| J[Post Comment<br/>Comente aprovacao no PR]
-    I -->|Não| K[Post Comment<br/>Comente com issues e score]
+    I -->|Yes| J[Post Comment<br/>Comment approval on PR]
+    I -->|No| K[Post Comment<br/>Comment with issues and score]
     J --> L([END])
     K --> L
 ```
 
-## Rubrica de Scoring (0-100)
+## Scoring Rubric (0-100)
 
-| Critério | Peso |
-|----------|------|
-| Corretude | 25% |
-| Qualidade de código | 20% |
-| Testes | 20% |
-| Segurança | 15% |
-| Documentação | 10% |
+| Criterion | Weight |
+|-----------|--------|
+| Correctness | 25% |
+| Code quality | 20% |
+| Tests | 20% |
+| Security | 15% |
+| Documentation | 10% |
 | Performance | 10% |
 
-## Revisores paralelos
+## Parallel reviewers
 
-1. `code-reviewer` — Qualidade geral
-2. `security-reviewer` — Vulnerabilidades
-3. `pr-test-analyzer` — Cobertura de testes
-4. `type-design-analyzer` — Design de tipos
-5. `silent-failure-hunter` — Falhas silenciosas
+1. `code-reviewer` — General quality
+2. `security-reviewer` — Vulnerabilities
+3. `pr-test-analyzer` — Test coverage
+4. `type-design-analyzer` — Type design
+5. `silent-failure-hunter` — Silent failures
 
-## Formato do comentário no PR
+## PR comment format
 
 ```markdown
 ## 🤖 EKC Code Review — Score: XX/100

@@ -1,27 +1,27 @@
 ---
 name: code-review
-description: Code review generico com revisores especializados por linguagem
- type: flow
+description: Generic code review with language-specialized reviewers
+type: flow
 ---
 
 # Code Review Workflow
 
-Revisão de código genérica que detecta a linguagem e escala revisores especializados.
+Generic code review that detects the language and scales specialized reviewers.
 
 ```mermaid
 flowchart TD
-    A([BEGIN]) --> B[Identify Language<br/>Detecte a linguagem dos arquivos]
-    B --> C[Select Specialist<br/>Escolha o revisor especializado]
-    C --> D[Review<br/>Execute a revisao focada]
-    D --> E[Cross-Cutting Checks<br/>Execute verificacoes cross-cutting]
-    E --> F[Report<br/>Consolide findings]
+    A([BEGIN]) --> B[Identify Language<br/>Detect the language of files]
+    B --> C[Select Specialist<br/>Choose the specialized reviewer]
+    C --> D[Review<br/>Execute focused review]
+    D --> E[Cross-Cutting Checks<br/>Execute cross-cutting checks]
+    E --> F[Report<br/>Consolidate findings]
     F --> G([END])
 ```
 
-## Mapeamento linguagem → revisor
+## Language → reviewer mapping
 
-| Extensão | Revisor especializado |
-|----------|----------------------|
+| Extension | Specialized reviewer |
+|-----------|---------------------|
 | `.py` | `python-reviewer` |
 | `.ts`, `.tsx`, `.js`, `.jsx` | `typescript-reviewer` |
 | `.rs` | `rust-reviewer` |
@@ -31,14 +31,14 @@ flowchart TD
 | `.java` | `java-reviewer` |
 | `.kt` | `kotlin-reviewer` |
 | `.dart` | `flutter-reviewer` |
-| Outros / Misto | `code-reviewer` |
+| Others / Mixed | `code-reviewer` |
 
-## Verificações cross-cutting (sempre)
+## Cross-cutting checks (always)
 
-- `security-reviewer` — vulnerabilidades
-- `silent-failure-hunter` — falhas silenciosas
-- `type-design-analyzer` — design de tipos
-- `performance-optimizer` — performance crítica
+- `security-reviewer` — vulnerabilities
+- `silent-failure-hunter` — silent failures
+- `type-design-analyzer` — type design
+- `performance-optimizer` — critical performance
 
 ## Output
 

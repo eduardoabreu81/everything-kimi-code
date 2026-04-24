@@ -1,137 +1,132 @@
 # EKC — Everything Kimi Code
 
-> **Contexto de Projeto** — Este arquivo é carregado automaticamente em toda sessão do Kimi Code.
+> **Project Context** — This file is automatically loaded in every Kimi Code session.
 
 ---
 
-## 🤖 Identidade do Assistente (IMPORTANTE)
+## 🤖 Assistant Identity (IMPORTANT)
 
-> **EU SOU O KIMI CODE** — o assistente de IA do ecossistema Kimi (Kimi CLI / Kimi VS Code Extension).
+> **I AM KIMI CODE** — the AI assistant of the Kimi ecosystem (Kimi CLI / Kimi VS Code Extension).
 >
-> **EU NÃO SOU O ECC** (Everything Claude Code). O ECC é o ecossistema do Claude Code, criado por Affaan M, que serviu como **fonte de inspiração e origem** dos agents e skills.
+> **I AM NOT ECC** (Everything Claude Code). ECC is the Claude Code ecosystem, created by Affaan M, which served as the **source of inspiration and origin** for the agents and skills.
 >
-> **O EKC é o projeto deste repositório** — uma reimaginação independente do ECC para o ecossistema Kimi, liderado por Eduardo. Meu papel é ajudar a construir, manter e evoluir o EKC.
+> **EKC IS THE PROJECT IN THIS REPOSITORY** — an independent reimagination of ECC for the Kimi ecosystem, led by Eduardo. My role is to help build, maintain, and evolve EKC.
 
 ---
 
-## 🎯 O que é este projeto
+## 🎯 What is this project
 
-O **EKC (Everything Kimi Code)** é um ecossistema open-source e **independente** que converte, adapta e expande a experiência do **Claude Code (ECC)** para o **Kimi CLI** e **Kimi VS Code Extension**.
+The **EKC (Everything Kimi Code)** is an open-source and **independent** ecosystem that converts, adapts, and expands the **Claude Code (ECC)** experience to the **Kimi CLI** and **Kimi VS Code Extension**.
 
-Nasceu de uma migração massiva realizada em **20/04/2026**, onde o ecossistema ECC foi portado e reimaginado para o formato nativo do Kimi CLI.
+Born from a massive migration performed on **2026-04-20**, where the ECC ecosystem was ported and reimagined for the native Kimi CLI format.
 
-### Números atuais
-- **64 Agents** especializados (revisão, build, arquitetura, segurança, git, orquestração)
-- **202 Skills** reutilizáveis (backend, frontend, DevOps, segurança, healthcare, negócios, mídia)
-- **Kimi-Mem** (em desenvolvimento): fork completo do `claude-mem` com memória persistente
-
----
-
-## 🏗️ Histórico da Migração (20/04/2026)
-
-### Desafios superados
-
-| Aspecto | Claude Code | Kimi CLI | Adaptação feita |
-|---------|------------|----------|-----------------|
-| **Commands** | `/feature-dev`, `/review-pr` | ❌ Não existe | Viraram **Agents Orquestradores** |
-| **Hooks** | `SessionStart`, `PostToolUse`, `Stop` | ❌ Infra limitada | Viraram **Agents Especializados** |
-| **Agents** | Apenas `.md` | `.md` + `.yaml` | Criado par para cada um |
-| **Skills** | Frontmatter YAML | Frontmatter YAML similar | Port direto |
-| **Ferramentas** | `Bash`, `Read`, `Task` | `Shell`, `ReadFile`, `Agent` | Nomes e semântica traduzidos |
-| **Argumentos** | `$ARGUMENTS` | Passado via `prompt` na `Agent` tool | Adaptado |
-
-### Migrações concluídas
-- **17 skills** migradas do ECC (writing-rules, playground, build-mcp-*, claude-md-improver, etc.)
-- **13 agents** criados/adaptados
-- **8 commands** migrados para agents (feature-dev, pr-review, github-code-reviewer, git-commit, etc.)
-- **3 hooks** adaptados para agents (security-advisor, output-style-guide, iterative-loop)
-
-### O que foi removido
-- `chief-of-staff`: específico do ecossistema Claude (hooks `/mail`, `/slack`)
-- `harness-optimizer`: dependia do command `/harness-audit` do Claude
+### Current numbers
+- **64 Specialized Agents** (review, build, architecture, security, git, orchestration)
+- **206 Reusable Skills** (backend, frontend, DevOps, security, healthcare, business, media)
+- **Kimi-Mem** (in development): complete fork of `claude-mem` with persistent memory
 
 ---
 
-## 📁 Estrutura do Repositório
+## 🏗️ Migration History (2026-04-20)
+
+### Challenges overcome
+
+| Aspect | Claude Code | Kimi CLI | EKC Adaptation |
+|--------|------------|----------|----------------|
+| **Commands** | `/feature-dev`, `/review-pr` | ❌ Does not exist | Became **Orchestrator Agents** |
+| **Hooks** | `SessionStart`, `PostToolUse`, `Stop` | ❌ Limited infra | Became **Specialized Agents** |
+| **Agents** | Only `.md` | `.md` + `.yaml` | Created pair for each |
+| **Skills** | YAML frontmatter | Similar YAML frontmatter | Direct port |
+| **Tools** | `Bash`, `Read`, `Task` | `Shell`, `ReadFile`, `Agent` | Names and semantics translated |
+| **Arguments** | `$ARGUMENTS` | Passed via `prompt` in `Agent` tool | Adapted |
+
+### Completed migrations
+- **17 skills** migrated from ECC (writing-rules, playground, build-mcp-*, claude-md-improver, etc.)
+- **13 agents** created/adapted
+- **8 commands** migrated to agents (feature-dev, pr-review, github-code-reviewer, git-commit, etc.)
+- **3 hooks** adapted to agents (security-advisor, output-style-guide, iterative-loop)
+
+### What was removed
+- `chief-of-staff`: specific to the Claude ecosystem (hooks `/mail`, `/slack`)
+- `harness-optimizer`: depended on Claude's `/harness-audit` command
+
+---
+
+## 📁 Repository Structure
 
 ```
 everything-kimi-code/
-├── agents/              # 64 agents (.md + .yaml)
-├── skills/              # 202 skills (SKILL.md em subdiretórios)
-├── kimi-mem/            # Fork do claude-mem (AGPL-3.0)
+├── agents/              # 64 agents (.md + .yaml) + EKC main agent
+├── skills/              # 206 skills (SKILL.md in subdirectories)
+├── kimi-mem/            # claude-mem fork (AGPL-3.0)
 ├── packages/
-│   ├── ekc-cli/         # CLI do EKC
-│   └── ekc-validator/   # Lib de validação
-├── docs/                # Documentação (pt-BR + en)
-├── templates/           # Templates para criar agents/skills
+│   ├── ekc-cli/         # EKC CLI
+│   └── ekc-validator/   # Validation lib
+├── docs/                # Documentation (en + pt-BR)
+├── templates/           # Templates for creating agents/skills
 ├── scripts/             # Installers (install.ps1, install.sh)
-├── tests/               # Testes de integração
-├── AGENTS.md            # Este arquivo
-├── PLANO_EKC.md         # Plano geral detalhado
-├── README.md            # README principal
-├── LICENSE              # Licença
+├── tests/               # Integration tests
+├── AGENTS.md            # This file
+├── PLANO_EKC.md         # Detailed general plan
+├── README.md            # Main README
+├── LICENSE              # License
 └── CONTRIBUTING.md
 ```
 
 ---
 
-## 📊 Status Atual (Fase de Fundação)
+## 📊 Current Status (Foundation Phase)
 
-### ✅ Concluído
-- [x] Migração inicial ECC → Kimi (20/04/2026)
-- [x] Criação do repositório GitHub (`eduardoabreu81/everything-kimi-code`)
-- [x] Clone local em `C:\Users\Eduardo\OneDrive\Documentos\GitHub\everything-kimi-code`
-- [x] Plano geral escrito (`PLANO_EKC.md`)
-- [x] Decisão: **NÃO fazer fork** do `affaan-m/everything-claude-code`
+### ✅ Completed
+- [x] Initial ECC → Kimi migration (2026-04-20)
+- [x] GitHub repository creation (`eduardoabreu81/everything-kimi-code`)
+- [x] Local clone at `C:\Users\Eduardo\OneDrive\Documentos\GitHub\everything-kimi-code`
+- [x] General plan written (`PLANO_EKC.md`)
+- [x] Decision: **NO fork** of `affaan-m/everything-claude-code`
+- [x] EKC main agent created (`agents/ekc/ekc.yaml`) with 64 subagents
+- [x] 4 flow skills created (`feature-dev`, `pr-review`, `github-code-reviewer`, `code-review`)
 
-### 🔄 Em andamento / Próximos passos imediatos
-- [x] Copiar estrutura de agents de `C:\Users\Eduardo\.kimi\agents\` → `agents/`
-- [x] Copiar estrutura de skills de `C:\Users\Eduardo\.kimi\skills\` → `skills/`
-- [x] Criar `README.md` profissional (bilíngue PT/EN)
-- [x] Definir licença definitiva (MIT para agents/skills, AGPL-3.0 para kimi-mem)
-- [x] Criar `CONTRIBUTING.md`
-- [x] Criar `CHANGELOG.md`
-- [x] Commit inicial e push
-- [ ] Desenvolver `ekc-cli` (instalador interativo)
-- [ ] Iniciar implementação do Kimi-Mem (Caminho C - fork completo)
+### 🔄 In progress / Next immediate steps
+- [ ] Develop `ekc-cli` (interactive installer)
+- [ ] Start Kimi-Mem implementation (Path C - complete fork)
 
 ---
 
-## 🔧 Decisões Arquiteturais Tomadas
+## 🔧 Architectural Decisions Made
 
-1. **Repo do zero** (sem fork do ECC original) — arquitetura Claude-specific não se aplica ao Kimi
-2. **PT-BR como idioma principal** — EN como secundário
-3. **Skills como workflow surface principal** — commands são legado, agents são orquestradores
-4. **Kimi-Mem: Caminho C (Full)** — fork completo do claude-mem com session tracking automático
-5. **Licenciamento dual:** MIT (ecossistema) + AGPL-3.0 (kimi-mem fork)
-
----
-
-## 📂 Fontes de Referência Locais
-
-| Arquivo | Local | Descrição |
-|---------|-------|-----------|
-| Agents migrados | `C:\Users\Eduardo\.kimi\agents\` | 64 arquivos .md + .yaml |
-| Skills migradas | `C:\Users\Eduardo\.kimi\skills\` | 202 diretórios com SKILL.md |
-| Catálogo | `C:\Users\Eduardo\.kimi\AGENTS_AND_SKILLS_CATALOGO.md` | Documentação completa |
-| Tracker de migração | `C:\Users\Eduardo\.kimi\MIGRATION_TRACKER.md` | Log de todas as migrações |
-| Plano de migração | `C:\Users\Eduardo\.kimi\MIGRATION_PLAN.md` | Plano dos 3 commands prioritários |
-| Adaptação Kimi-Mem | `C:\Users\Eduardo\.kimi\KIMI_MEM_ADAPTATION_PLAN.md` | Plano do fork claude-mem |
-| Planos de sessão | `C:\Users\Eduardo\.kimi\plans\` | Planos gerados em sessões anteriores |
+1. **Repo from scratch** (no fork of original ECC) — Claude-specific architecture does not apply to Kimi
+2. **English as main language** — PT-BR as secondary
+3. **Skills as primary workflow surface** — commands are legacy, agents are orchestrators
+4. **Kimi-Mem: Path C (Full)** — complete fork of claude-mem with automatic session tracking
+5. **Dual licensing:** MIT (ecosystem) + AGPL-3.0 (kimi-mem fork)
 
 ---
 
-## 🚀 Como retomar o trabalho
+## 📂 Local Reference Sources
 
-Ao abrir este projeto no Kimi Code:
-1. Leia `PLANO_EKC.md` para visão completa
-2. Verifique o estado de `agents/` e `skills/`
-3. Execute `scripts/validate-structure.js` quando disponível
-4. Mantenha o `AGENTS.md` atualizado com decisões novas
+| File | Location | Description |
+|------|----------|-------------|
+| Migrated agents | `C:\Users\Eduardo\.kimi\agents\` | 64 .md + .yaml files |
+| Migrated skills | `C:\Users\Eduardo\.kimi\skills\` | 202 directories with SKILL.md |
+| Catalog | `C:\Users\Eduardo\.kimi\AGENTS_AND_SKILLS_CATALOGO.md` | Complete documentation |
+| Migration tracker | `C:\Users\Eduardo\.kimi\MIGRATION_TRACKER.md` | Log of all migrations |
+| Migration plan | `C:\Users\Eduardo\.kimi\MIGRATION_PLAN.md` | Plan for 3 priority commands |
+| Kimi-Mem adaptation | `C:\Users\Eduardo\.kimi\KIMI_MEM_ADAPTATION_PLAN.md` | claude-mem fork plan |
+| Session plans | `C:\Users\Eduardo\.kimi\plans\` | Plans generated in previous sessions |
 
 ---
 
-> **Nota:** Este é um documento vivo. Atualize sempre que decisões importantes forem tomadas.
+## 🚀 How to resume work
 
-*Última atualização: 2026-04-24*  
-*Sessão de origem: Retomada EKC — Estruturação completa do repo*
+When opening this project in Kimi Code:
+1. Read `PLANO_EKC.md` for complete vision
+2. Check the status of `agents/` and `skills/`
+3. Run `scripts/validate-structure.js` when available
+4. Keep `AGENTS.md` updated with new decisions
+
+---
+
+> **Note:** This is a living document. Update it whenever important decisions are made.
+
+*Last updated: 2026-04-24*  
+*Origin session: ECC → EKC Migration + Repo Foundation*

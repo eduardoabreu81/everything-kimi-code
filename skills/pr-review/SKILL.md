@@ -1,30 +1,30 @@
 ---
 name: pr-review
-description: Workflow de revisao completa de PR — orquestra 6 revisores especializados
- type: flow
+description: Complete PR review workflow — orchestrates 6 specialized reviewers
+type: flow
 ---
 
 # PR Review Workflow
 
-Orquestra múltiplos revisores especializados para uma revisão completa de Pull Request.
+Orchestrates multiple specialized reviewers for a complete Pull Request review.
 
 ```mermaid
 flowchart TD
-    A([BEGIN]) --> B[Detect Changes<br/>Identifique arquivos alterados via git diff]
-    B --> C[Select Reviewers<br/>Escolha revisores baseado nos tipos de arquivo]
-    C --> D[Parallel Review<br/>Execute revisores em paralelo]
-    D --> E[Collect Findings<br/>Consolide issues, warnings e sugestões]
-    E --> F{Issues críticas?}
-    F -->|Sim| G[Critical Report<br/>Destaque issues bloqueantes]
-    F -->|Não| H[Approval Report<br/>PR aprovado com sugestões]
+    A([BEGIN]) --> B[Detect Changes<br/>Identify changed files via git diff]
+    B --> C[Select Reviewers<br/>Choose reviewers based on file types]
+    C --> D[Parallel Review<br/>Execute reviewers in parallel]
+    D --> E[Collect Findings<br/>Consolidate issues, warnings and suggestions]
+    E --> F{Critical issues?}
+    F -->|Yes| G[Critical Report<br/>Highlight blocking issues]
+    F -->|No| H[Approval Report<br/>PR approved with suggestions]
     G --> I([END])
     H --> I
 ```
 
-## Revisores por tipo de arquivo
+## Reviewers by file type
 
-| Tipo de arquivo | Revisores recomendados |
-|-----------------|------------------------|
+| File type | Recommended reviewers |
+|-----------|----------------------|
 | `.py` | `python-reviewer`, `pr-test-analyzer` |
 | `.ts`, `.tsx`, `.js` | `typescript-reviewer`, `pr-test-analyzer` |
 | `.rs` | `rust-reviewer`, `pr-test-analyzer` |
@@ -35,12 +35,12 @@ flowchart TD
 | `.kt` | `kotlin-reviewer` |
 | `.sql`, migrations | `database-reviewer` |
 | `.yaml`, `.json` config | `security-reviewer` |
-| Qualquer | `code-reviewer`, `silent-failure-hunter`, `type-design-analyzer` |
+| Any | `code-reviewer`, `silent-failure-hunter`, `type-design-analyzer` |
 
-## Template de Output
+## Output template
 
-1. **Issues Críticas** (bloqueantes)
-2. **Issues Importantes** (devem ser corrigidas)
-3. **Sugestões** (melhorias opcionais)
-4. **Pontos Fortes** (o que está bem feito)
-5. **Ação Recomendada** (aprovar, requisitar changes, etc.)
+1. **Critical Issues** (blocking)
+2. **Important Issues** (should be fixed)
+3. **Suggestions** (optional improvements)
+4. **Strengths** (what is well done)
+5. **Recommended Action** (approve, request changes, etc.)
