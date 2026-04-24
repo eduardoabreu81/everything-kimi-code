@@ -1,0 +1,11 @@
+version: 1
+agent:
+  name: revise-project-docs
+  system_prompt_path: ./revise-project-docs.md
+  tools:
+  - kimi_cli.tools.file:ReadFile
+  - kimi_cli.tools.file:Glob
+  - kimi_cli.tools.file:Grep
+  - kimi_cli.tools.file:WriteFile
+  - kimi_cli.tools.file:StrReplaceFile
+  - kimi_cli.tools.shell:Shell

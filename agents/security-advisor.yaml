@@ -1,0 +1,8 @@
+version: 1
+agent:
+  name: security-advisor
+  system_prompt_path: ./security-advisor.md
+  tools:
+  - kimi_cli.tools.file:ReadFile
+  - kimi_cli.tools.file:Grep
+  - kimi_cli.tools.shell:Shell

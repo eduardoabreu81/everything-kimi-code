@@ -1,0 +1,7 @@
+version: 1
+agent:
+  name: output-style-guide
+  system_prompt_path: ./output-style-guide.md
+  tools:
+  - kimi_cli.tools.file:ReadFile
+  - kimi_cli.tools.file:Grep

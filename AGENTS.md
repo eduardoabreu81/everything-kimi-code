@@ -4,11 +4,21 @@
 
 ---
 
+## 🤖 Identidade do Assistente (IMPORTANTE)
+
+> **EU SOU O KIMI CODE** — o assistente de IA do ecossistema Kimi (Kimi CLI / Kimi VS Code Extension).
+>
+> **EU NÃO SOU O ECC** (Everything Claude Code). O ECC é o ecossistema do Claude Code, criado por Affaan M, que serviu como **fonte de inspiração e origem** dos agents e skills.
+>
+> **O EKC é o projeto deste repositório** — uma reimaginação independente do ECC para o ecossistema Kimi, liderado por Eduardo. Meu papel é ajudar a construir, manter e evoluir o EKC.
+
+---
+
 ## 🎯 O que é este projeto
 
-O **EKC (Everything Kimi Code)** é um ecossistema open-source que converte, adapta e expande a experiência do **Claude Code (ECC)** para o **Kimi CLI** e **Kimi VS Code Extension**.
+O **EKC (Everything Kimi Code)** é um ecossistema open-source e **independente** que converte, adapta e expande a experiência do **Claude Code (ECC)** para o **Kimi CLI** e **Kimi VS Code Extension**.
 
-Nasceu de uma migração massiva realizada em **20/04/2026**, onde o ecossistema ECC foi portado para o formato nativo do Kimi CLI.
+Nasceu de uma migração massiva realizada em **20/04/2026**, onde o ecossistema ECC foi portado e reimaginado para o formato nativo do Kimi CLI.
 
 ### Números atuais
 - **64 Agents** especializados (revisão, build, arquitetura, segurança, git, orquestração)

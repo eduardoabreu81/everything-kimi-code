@@ -1,0 +1,8 @@
+version: 1
+agent:
+  name: conversation-analyzer
+  system_prompt_path: ./conversation-analyzer.md
+  tools:
+  - kimi_cli.tools.file:ReadFile
+  - kimi_cli.tools.file:Grep
+  - kimi_cli.tools.agent:Agent
