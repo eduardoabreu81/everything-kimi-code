@@ -1,0 +1,159 @@
+#!/usr/bin/env bash
+# EKC Project Install Validation
+# Usage: ./validate-project-install.sh [-q|--quiet]
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+TARGET="${REPO_ROOT}/.kimi/skills"
+STAMP_FILE="${TARGET}/.ekc-installed"
+
+QUIET=0
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -q|--quiet) QUIET=1; shift ;;
+    *) echo "Unknown option: $1"; exit 1 ;;
+  esac
+done
+
+info()  { [[ $QUIET -eq 0 ]] && echo "$*"; }
+pass()  { [[ $QUIET -eq 0 ]] && echo "  [PASS] $*"; }
+fail()  { echo "  [FAIL] $*"; }
+warn()  { [[ $QUIET -eq 0 ]] && echo "  [WARN] $*"; }
+
+FAILURES=0
+WARNINGS=0
+
+info "EKC Project Install Validation"
+info "=============================="
+info "Target: ${TARGET}"
+info ""
+
+# 1. Target directory exists
+if [[ -d "$TARGET" ]]; then
+  pass "Directory exists"
+else
+  fail "Directory not found: ${TARGET}"
+  FAILURES=$((FAILURES + 1))
+  info ""
+  info "Result: CRITICAL FAILURE"
+  exit 1
+fi
+
+# 2. Stamp file exists
+if [[ -f "$STAMP_FILE" ]]; then
+  pass "Stamp file found"
+else
+  warn "Stamp file not found (.ekc-installed)"
+  WARNINGS=$((WARNINGS + 1))
+fi
+
+# 3. Each skill has SKILL.md
+TOTAL_SKILLS=0
+MISSING_SKILL_MD=0
+for skill_dir in "$TARGET"/*/; do
+  [[ -d "$skill_dir" ]] || continue
+  TOTAL_SKILLS=$((TOTAL_SKILLS + 1))
+  skill_md="${skill_dir}/SKILL.md"
+  if [[ ! -f "$skill_md" ]]; then
+    skill_name="$(basename "$skill_dir")"
+    fail "${skill_name}: missing SKILL.md"
+    MISSING_SKILL_MD=$((MISSING_SKILL_MD + 1))
+    FAILURES=$((FAILURES + 1))
+  fi
+done
+
+if [[ $MISSING_SKILL_MD -eq 0 ]]; then
+  pass "All ${TOTAL_SKILLS} skills have SKILL.md"
+else
+  fail "${MISSING_SKILL_MD} skills missing SKILL.md"
+fi
+
+# 4. YAML frontmatter check
+MISSING_FRONTMATTER=0
+for skill_dir in "$TARGET"/*/; do
+  [[ -d "$skill_dir" ]] || continue
+  skill_md="${skill_dir}/SKILL.md"
+  if [[ -f "$skill_md" ]]; then
+    if ! head -n 1 "$skill_md" | grep -q '^---'; then
+      MISSING_FRONTMATTER=$((MISSING_FRONTMATTER + 1))
+    fi
+  fi
+done
+
+if [[ $MISSING_FRONTMATTER -eq 0 ]]; then
+  pass "All skills have YAML frontmatter"
+else
+  warn "${MISSING_FRONTMATTER} skills missing YAML frontmatter"
+  WARNINGS=$((WARNINGS + 1))
+fi
+
+# 5. Flow skill validation
+FLOW_NAMES=("code-review" "feature-dev" "github-code-reviewer" "pr-review")
+info ""
+info "Flow Skill Validation:"
+
+for flow_name in "${FLOW_NAMES[@]}"; do
+  flow_md="${TARGET}/${flow_name}/SKILL.md"
+  if [[ ! -f "$flow_md" ]]; then
+    fail "${flow_name}: SKILL.md not found"
+    FAILURES=$((FAILURES + 1))
+    continue
+  fi
+
+  content="$(cat "$flow_md")"
+  has_type_flow=0
+  has_diagram=0
+  has_begin=0
+  has_end=0
+
+  if echo "$content" | grep -q 'type:\s*flow'; then has_type_flow=1; fi
+  if echo "$content" | grep -qE '```mermaid|```d2'; then has_diagram=1; fi
+  if echo "$content" | grep -qE '\(\[BEGIN\]\)|BEGIN\s*->|->\s*BEGIN|:BEGIN'; then has_begin=1; fi
+  if echo "$content" | grep -qE '\(\[END\]\)|->\s*END|END\s*:'; then has_end=1; fi
+
+  details=""
+  ok=1
+  if [[ $has_type_flow -eq 1 ]]; then details+="type=flow "; else details+="type=MISSING "; ok=0; fi
+  if [[ $has_diagram -eq 1 ]]; then details+="diagram=YES "; else details+="diagram=MISSING "; ok=0; fi
+  if [[ $has_begin -eq 1 ]]; then details+="begin=YES "; else details+="begin=MISSING "; ok=0; fi
+  if [[ $has_end -eq 1 ]]; then details+="end=YES"; else details+="end=MISSING"; ok=0; fi
+
+  if [[ $ok -eq 1 ]]; then
+    pass "${flow_name}: ${details}"
+  else
+    fail "${flow_name}: ${details}"
+    FAILURES=$((FAILURES + 1))
+  fi
+done
+
+# Summary
+info ""
+info "=============================="
+if [[ $FAILURES -eq 0 && $WARNINGS -eq 0 ]]; then
+  info "Result: ALL CHECKS PASSED"
+  info "  Skills: ${TOTAL_SKILLS}"
+  info "  Flows:  4/4 valid"
+elif [[ $FAILURES -eq 0 ]]; then
+  info "Result: PASSED WITH WARNINGS (${WARNINGS})"
+else
+  info "Result: ${FAILURES} CRITICAL FAILURE(S), ${WARNINGS} WARNING(S)"
+fi
+
+info ""
+info "Manual Test Required"
+info "===================="
+info "1. Run: kimi"
+info "2. Type: /help"
+info "3. Look for 'Project' skills section"
+info "4. Type: /flow"
+info "5. Confirm these 4 flows appear in autocomplete:"
+info "     /flow:code-review"
+info "     /flow:feature-dev"
+info "     /flow:github-code-reviewer"
+info "     /flow:pr-review"
+info "6. Run one: /flow:hello-flow (or /flow:feature-dev)"
+info ""
+
+exit $FAILURES

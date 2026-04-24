@@ -10,11 +10,11 @@ Generic code review that detects the language and scales specialized reviewers.
 
 ```mermaid
 flowchart TD
-    A([BEGIN]) --> B[Identify Language<br/>Detect the language of files]
-    B --> C[Select Specialist<br/>Choose the specialized reviewer]
-    C --> D[Review<br/>Execute focused review]
-    D --> E[Cross-Cutting Checks<br/>Execute cross-cutting checks]
-    E --> F[Report<br/>Consolidate findings]
+    A([BEGIN]) --> B[Identify Language - Detect the language of files]
+    B --> C[Select Specialist - Choose the specialized reviewer]
+    C --> D[Review - Execute focused review]
+    D --> E[Cross-Cutting Checks - Execute cross-cutting checks]
+    E --> F[Report - Consolidate findings]
     F --> G([END])
 ```
 

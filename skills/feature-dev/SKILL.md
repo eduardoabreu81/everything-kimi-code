@@ -10,19 +10,19 @@ Feature development workflow with 7 phases, orchestrating multiple EKC agents.
 
 ```mermaid
 flowchart TD
-    A([BEGIN]) --> B[Discovery<br/>Understand the context and goal of the feature]
-    B --> C[Exploration<br/>Explore the existing codebase]
-    C --> D[Questions<br/>Ask clarifying questions to the user]
+    A([BEGIN]) --> B[Discovery - Understand the context and goal of the feature]
+    B --> C[Exploration - Explore the existing codebase]
+    C --> D[Questions - Ask clarifying questions to the user]
     D --> E{User responds?}
-    E -->|Yes| F[Architecture<br/>Propose architecture and design]
+    E -->|Yes| F[Architecture - Propose architecture and design]
     E -->|No| D
     F --> G{User approves?}
-    G -->|Yes| H[Implementation<br/>Implement the feature]
+    G -->|Yes| H[Implementation - Implement the feature]
     G -->|No| F
-    H --> I[Review<br/>Review quality, security and performance]
+    H --> I[Review - Review quality, security and performance]
     I --> J{Passed review?}
     J -->|No| H
-    J -->|Yes| K[Summary<br/>Document what was done]
+    J -->|Yes| K[Summary - Document what was done]
     K --> L([END])
 ```
 

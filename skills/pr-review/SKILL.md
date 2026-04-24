@@ -10,13 +10,13 @@ Orchestrates multiple specialized reviewers for a complete Pull Request review.
 
 ```mermaid
 flowchart TD
-    A([BEGIN]) --> B[Detect Changes<br/>Identify changed files via git diff]
-    B --> C[Select Reviewers<br/>Choose reviewers based on file types]
-    C --> D[Parallel Review<br/>Execute reviewers in parallel]
-    D --> E[Collect Findings<br/>Consolidate issues, warnings and suggestions]
+    A([BEGIN]) --> B[Detect Changes - Identify changed files via git diff]
+    B --> C[Select Reviewers - Choose reviewers based on file types]
+    C --> D[Parallel Review - Execute reviewers in parallel]
+    D --> E[Collect Findings - Consolidate issues, warnings and suggestions]
     E --> F{Critical issues?}
-    F -->|Yes| G[Critical Report<br/>Highlight blocking issues]
-    F -->|No| H[Approval Report<br/>PR approved with suggestions]
+    F -->|Yes| G[Critical Report - Highlight blocking issues]
+    F -->|No| H[Approval Report - PR approved with suggestions]
     G --> I([END])
     H --> I
 ```
