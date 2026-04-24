@@ -15,7 +15,7 @@
 Born from a massive migration on **2026-04-20**, EKC evolved into a standalone product maintained by the community.
 
 **Current numbers:**
-- **65 Agents** (64 specialized + 1 main EKC orchestrator)
+- **1 EKC main agent + 64 specialist subagents**
 - **206 Skills** (202 original + 4 flow skills)
 - **Kimi-Mem** (in development): complete fork of `claude-mem`
 
@@ -44,7 +44,7 @@ Born from a massive migration on **2026-04-20**, EKC evolved into a standalone p
 | **English as primary language** | Universal reach |
 | **Skills as primary workflow surface** | Kimi's native extension mechanism |
 | **Flow skills for workflows** | Replaces ECC commands (not available in Kimi) |
-| **EKC main agent with subagents** | Makes all 64 agents available via `Agent` tool |
+| **EKC main agent with subagents** | Makes all 64 specialist subagents available via `Agent` tool |
 | **Kimi-Mem: Full Path (C)** | Complete fork of claude-mem with session tracking |
 | **Dual licensing:** MIT + AGPL-3.0 | Permissive for ecosystem, copyleft for kimi-mem fork |
 
@@ -54,7 +54,7 @@ Born from a massive migration on **2026-04-20**, EKC evolved into a standalone p
 
 ```
 everything-kimi-code/
-├── agents/              # 65 agents (64 specialized + 1 EKC main)
+├── agents/              # 1 main agent + 64 specialist subagents (.md + .yaml)
 ├── skills/              # 206 skills (SKILL.md in subdirectories)
 ├── kimi-mem/            # claude-mem fork (AGPL-3.0)
 ├── packages/
@@ -79,9 +79,9 @@ everything-kimi-code/
 ### Phase 0: Foundation ✅
 - [x] Initial ECC → Kimi migration (2026-04-20)
 - [x] GitHub repository created
-- [x] 64 agents migrated
+- [x] 64 specialist subagents migrated
 - [x] 202 skills migrated
-- [x] EKC main agent created (`agents/ekc/ekc.yaml`)
+- [x] EKC main agent created (`agents/ekc.yaml`)
 - [x] 4 flow skills created
 - [x] Base documentation
 
@@ -126,7 +126,7 @@ everything-kimi-code/
 
 ### Load the EKC main agent
 ```bash
-kimi --agent-file agents/ekc/ekc.yaml
+kimi --agent-file agents/ekc.yaml
 ```
 
 ### Use flow skills

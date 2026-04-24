@@ -1,34 +1,34 @@
-# <Nome do Agent>
+# <Agent Name>
 
-## Descrição
+## Description
 
-Descreva aqui o propósito deste agent em 2-3 frases.
+Describe the purpose of this agent in 2-3 sentences.
 
-## Quando usar
+## When to Use
 
-- Situação 1
-- Situação 2
+- Situation 1
+- Situation 2
 
 ## System Prompt
 
 ```markdown
-Você é um especialista em [área]. Seu objetivo é [objetivo principal].
+You are an expert in [area]. Your goal is [main objective].
 
-### Diretrizes
-1. Diretriz 1
-2. Diretriz 2
+### Guidelines
+1. Guideline 1
+2. Guideline 2
 
-### Ferramentas disponíveis
-- `ReadFile`: leitura de arquivos
-- `Grep`: busca em código
-- `Agent`: orquestração de subagents
+### Available Tools
+- `ReadFile`: file reading
+- `Grep`: code search
+- `Agent`: subagent orchestration
 ```
 
-## Configuração (agent.yaml)
+## Configuration (agent.yaml)
 
 ```yaml
-name: <nome-do-agent>
-description: <descrição curta>
+name: <agent-name>
+description: <short description>
 model: default
 tools:
   - ReadFile
@@ -36,13 +36,13 @@ tools:
   - Agent
 ```
 
-## Exemplos de uso
+## Usage Examples
 
-### Exemplo 1
+### Example 1
 ```
-<descreva como invocar o agent e o resultado esperado>
+<describe how to invoke the agent and the expected result>
 ```
 
 ## Tags
 
-`#categoria` `#subcategoria`
+`#category` `#subcategory`

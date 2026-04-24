@@ -10,7 +10,7 @@ O **EKC (Everything Kimi Code)** é um ecossistema open-source que converte, ada
 
 ### 🚀 O que está incluído
 
-- **64 Agents especializados** — revisão de código, arquitetura, build, segurança, Git e orquestração
+- **1 EKC main agent + 64 specialist subagents** — code review, architecture, build, security, Git, and orchestration
 - **202 Skills reutilizáveis** — backend, frontend, DevOps, segurança, healthcare, negócios, mídia e mais
 - **Kimi-Mem (em desenvolvimento)** — fork do `claude-mem` com memória persistente e busca semântica
 - **CLI e validadores** — instalador, atualizador e diagnosticador de ambiente
@@ -30,7 +30,7 @@ cd ~/.ekc && ./scripts/install.sh
 
 ```
 everything-kimi-code/
-├── agents/              # 64 agents (.md + .yaml)
+├── agents/              # 1 main agent + 64 specialist subagents (.md + .yaml)
 ├── skills/              # 202 skills (SKILL.md em subdiretórios)
 ├── kimi-mem/            # Fork do claude-mem (AGPL-3.0)
 ├── packages/
@@ -61,7 +61,7 @@ Veja [LICENSE](LICENSE) para detalhes completos.
 
 ### 🚀 What's Included
 
-- **64 Specialized Agents** — code review, architecture, build, security, Git, and orchestration
+- **1 EKC main agent + 64 specialist subagents** — code review, architecture, build, security, Git, and orchestration
 - **202 Reusable Skills** — backend, frontend, DevOps, security, healthcare, business, media, and more
 - **Kimi-Mem (in development)** — fork of `claude-mem` with persistent memory and semantic search
 - **CLI and Validators** — installer, updater, and environment diagnostics

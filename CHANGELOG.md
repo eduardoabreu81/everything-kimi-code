@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Initial repository structure for `everything-kimi-code`
-- 64 specialized agents migrated from the ECC ecosystem
+- 64 specialist subagents migrated from the ECC ecosystem
 - 202 reusable skills migrated from the ECC ecosystem
 - 4 flow skills (`feature-dev`, `pr-review`, `github-code-reviewer`, `code-review`)
 - EKC main agent (`ekc.yaml`) registering all 64 subagents
