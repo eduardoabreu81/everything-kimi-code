@@ -147,7 +147,7 @@ The file `.gitignore` already includes `.kimi/skills/`. If you see runtime copie
 
 Kimi CLI 1.39.0 silently rejects flow skills that contain `<br/>` tags inside Mermaid node labels. Use ` - ` (space-hyphen-space) instead:
 
-```mermaid
+```text
 # Bad — flow will not be recognized
 B[Identify Language<br/>Detect the language]
 
