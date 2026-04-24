@@ -1,8 +1,8 @@
 # EKC — Everything Kimi Code
 
-**EKC (Everything Kimi Code)** is an open-source ecosystem that adapts and expands the **Claude Code (ECC)** experience for the **Kimi CLI**.
+**EKC (Everything Kimi Code)** is a Kimi CLI port and adaptation of [Everything Claude Code](https://github.com/affaan-m/everything-claude-code).
 
-It provides a collection of specialist agents, reusable skills, and interactive workflow flows designed to work with Kimi CLI's native tooling.
+The goal is not to copy ECC one-to-one. EKC keeps the parts that map well to Kimi, such as agents, subagents, reusable skills, and flow-based workflows, while adapting, replacing, or excluding Claude-specific surfaces that do not work the same way in Kimi CLI, such as Claude Code commands, hooks, plugin marketplace behavior, `.claude` paths, and `CLAUDE.md`-specific workflows.
 
 ### What's Included
 
