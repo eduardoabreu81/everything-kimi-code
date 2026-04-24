@@ -1,0 +1,8 @@
+{
+  "id": "hello-world-example",
+  "name": "hello-world",
+  "description": "A sample skill that demonstrates the skills system",
+  "version": "1.0.0",
+  "installed_at": "2026-04-09T22:30:00",
+  "source": "local"
+}

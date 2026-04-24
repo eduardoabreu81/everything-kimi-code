@@ -1,0 +1,10 @@
+version: 1
+agent:
+  name: opensource-sanitizer
+  system_prompt_path: ./opensource-sanitizer.md
+  tools:
+  - kimi_cli.tools.file:ReadFile
+  - kimi_cli.tools.file:Grep
+  - kimi_cli.tools.file:Glob
+  - kimi_cli.tools.shell:Shell
+  - kimi_cli.tools.agent:Agent

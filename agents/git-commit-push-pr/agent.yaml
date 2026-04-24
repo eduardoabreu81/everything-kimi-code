@@ -1,0 +1,6 @@
+version: 1
+agent:
+  name: git-commit-push-pr
+  system_prompt_path: ./git-commit-push-pr.md
+  tools:
+  - kimi_cli.tools.shell:Shell

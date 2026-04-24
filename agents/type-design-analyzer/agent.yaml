@@ -1,0 +1,10 @@
+version: 1
+agent:
+  name: type-design-analyzer
+  system_prompt_path: ./type-design-analyzer.md
+  tools:
+  - kimi_cli.tools.file:ReadFile
+  - kimi_cli.tools.file:Grep
+  - kimi_cli.tools.file:Glob
+  - kimi_cli.tools.shell:Shell
+  - kimi_cli.tools.agent:Agent
