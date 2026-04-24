@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: go-build-resolver
-  system_prompt_path: ./go-build-resolver.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:WriteFile

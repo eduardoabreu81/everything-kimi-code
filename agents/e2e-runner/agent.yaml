@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: e2e-runner
-  system_prompt_path: ./e2e-runner.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:WriteFile

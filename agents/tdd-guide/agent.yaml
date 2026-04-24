@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: tdd-guide
-  system_prompt_path: ./tdd-guide.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:WriteFile

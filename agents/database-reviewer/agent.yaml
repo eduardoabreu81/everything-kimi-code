@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: database-reviewer
-  system_prompt_path: ./database-reviewer.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:WriteFile

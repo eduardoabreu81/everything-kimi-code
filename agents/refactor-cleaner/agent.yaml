@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: refactor-cleaner
-  system_prompt_path: ./refactor-cleaner.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:WriteFile

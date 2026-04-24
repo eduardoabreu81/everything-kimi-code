@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: build-error-resolver
-  system_prompt_path: ./build-error-resolver.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:WriteFile

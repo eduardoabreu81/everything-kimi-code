@@ -1,6 +1,6 @@
 version: 1
 agent:
   name: git-clean-gone
-  system_prompt_path: ./git-clean-gone.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.shell:Shell

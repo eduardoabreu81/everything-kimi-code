@@ -1,8 +1,0 @@
-version: 1
-agent:
-  name: skill-reviewer
-  system_prompt_path: ./skill-reviewer.md
-  tools:
-  - kimi_cli.tools.file:ReadFile
-  - kimi_cli.tools.file:Grep
-  - kimi_cli.tools.file:Glob

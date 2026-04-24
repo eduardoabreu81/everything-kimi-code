@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: gan-evaluator
-  system_prompt_path: ./gan-evaluator.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:WriteFile

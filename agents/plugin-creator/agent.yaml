@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: plugin-creator
-  system_prompt_path: ./plugin-creator.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:Grep

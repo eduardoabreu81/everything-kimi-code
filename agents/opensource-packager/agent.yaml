@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: opensource-packager
-  system_prompt_path: ./opensource-packager.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:WriteFile

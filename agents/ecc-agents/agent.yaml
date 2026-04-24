@@ -1,8 +1,8 @@
-﻿version: 1
+version: 1
 agent:
   extend: default
   name: ecc-agents
-  system_prompt_path: ./ecc-agents.md
+  system_prompt_path: ./agent.md
   subagents:
     a11y-architect:
       path: ./a11y-architect.yaml

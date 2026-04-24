@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: architect
-  system_prompt_path: ./architect.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:Grep

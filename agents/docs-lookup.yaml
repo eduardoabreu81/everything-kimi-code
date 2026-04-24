@@ -1,8 +1,0 @@
-version: 1
-agent:
-  name: docs-lookup
-  system_prompt_path: ./docs-lookup.md
-  tools:
-  - kimi_cli.tools.file:ReadFile
-  - kimi_cli.tools.file:Grep
-  - kimi_cli.tools.agent:Agent

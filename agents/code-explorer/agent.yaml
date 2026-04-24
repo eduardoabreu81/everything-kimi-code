@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: code-explorer
-  system_prompt_path: ./code-explorer.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:Grep

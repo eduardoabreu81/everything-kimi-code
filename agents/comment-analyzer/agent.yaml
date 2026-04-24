@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: comment-analyzer
-  system_prompt_path: ./comment-analyzer.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:Grep

@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: seo-specialist
-  system_prompt_path: ./seo-specialist.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:Grep

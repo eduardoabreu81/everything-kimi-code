@@ -21,7 +21,7 @@ The **EKC (Everything Kimi Code)** is an open-source and **independent** ecosyst
 Born from a massive migration performed on **2026-04-20**, where the ECC ecosystem was ported and reimagined for the native Kimi CLI format.
 
 ### Current numbers
-- **64 Specialized Agents** (review, build, architecture, security, git, orchestration)
+- **1 EKC main agent + 64 specialist subagents** (review, build, architecture, security, git, orchestration)
 - **206 Reusable Skills** (backend, frontend, DevOps, security, healthcare, business, media)
 - **Kimi-Mem** (in development): complete fork of `claude-mem` with persistent memory
 
@@ -34,7 +34,7 @@ Born from a massive migration performed on **2026-04-20**, where the ECC ecosyst
 | Aspect | Claude Code | Kimi CLI | EKC Adaptation |
 |--------|------------|----------|----------------|
 | **Commands** | `/feature-dev`, `/review-pr` | ❌ Does not exist | Became **Orchestrator Agents** |
-| **Hooks** | `SessionStart`, `PostToolUse`, `Stop` | ❌ Limited infra | Became **Specialized Agents** |
+| **Hooks** | `SessionStart`, `PostToolUse`, `Stop` | ✅ Beta (13 events via `~/.kimi/config.toml`) | Adapted to native **Hooks** where possible; agents as fallback |
 | **Agents** | Only `.md` | `.md` + `.yaml` | Created pair for each |
 | **Skills** | YAML frontmatter | Similar YAML frontmatter | Direct port |
 | **Tools** | `Bash`, `Read`, `Task` | `Shell`, `ReadFile`, `Agent` | Names and semantics translated |
@@ -56,7 +56,7 @@ Born from a massive migration performed on **2026-04-20**, where the ECC ecosyst
 
 ```
 everything-kimi-code/
-├── agents/              # 64 agents (.md + .yaml) + EKC main agent
+├── agents/              # 1 main agent + 64 specialist subagents (.md + .yaml)
 ├── skills/              # 206 skills (SKILL.md in subdirectories)
 ├── kimi-mem/            # claude-mem fork (AGPL-3.0)
 ├── packages/
@@ -83,7 +83,7 @@ everything-kimi-code/
 - [x] Local clone at `C:\Users\Eduardo\OneDrive\Documentos\GitHub\everything-kimi-code`
 - [x] General plan written (`PLANO_EKC.md`)
 - [x] Decision: **NO fork** of `affaan-m/everything-claude-code`
-- [x] EKC main agent created (`agents/ekc/ekc.yaml`) with 64 subagents
+- [x] EKC main agent created (`agents/ekc.yaml`) orchestrating 64 specialist subagents
 - [x] 4 flow skills created (`feature-dev`, `pr-review`, `github-code-reviewer`, `code-review`)
 
 ### 🔄 In progress / Next immediate steps

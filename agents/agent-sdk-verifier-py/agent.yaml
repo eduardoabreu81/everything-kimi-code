@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: agent-sdk-verifier-py
-  system_prompt_path: ./agent-sdk-verifier-py.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:Grep

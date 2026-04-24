@@ -1,0 +1,24 @@
+{
+  "name": "ekc-cli",
+  "version": "0.1.0",
+  "description": "CLI for the Everything Kimi Code (EKC) ecosystem",
+  "main": "src/index.js",
+  "bin": {
+    "ekc": "./bin/ekc.js"
+  },
+  "scripts": {
+    "test": "node --test src/**/*.test.js"
+  },
+  "keywords": [
+    "kimi",
+    "ekc",
+    "cli",
+    "ai",
+    "agents"
+  ],
+  "author": "Eduardo Abreu",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,6 +1,6 @@
 version: 1
 agent:
   name: git-commit
-  system_prompt_path: ./git-commit.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.shell:Shell

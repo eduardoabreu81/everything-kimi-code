@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: java-reviewer
-  system_prompt_path: ./java-reviewer.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:Grep

@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: revise-project-docs
-  system_prompt_path: ./revise-project-docs.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:Glob

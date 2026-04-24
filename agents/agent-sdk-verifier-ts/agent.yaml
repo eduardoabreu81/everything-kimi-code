@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: agent-sdk-verifier-ts
-  system_prompt_path: ./agent-sdk-verifier-ts.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:Grep

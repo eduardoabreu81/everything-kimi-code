@@ -1,7 +1,7 @@
 version: 1
 agent:
   name: kotlin-build-resolver
-  system_prompt_path: ./kotlin-build-resolver.md
+  system_prompt_path: ./agent.md
   tools:
   - kimi_cli.tools.file:ReadFile
   - kimi_cli.tools.file:WriteFile

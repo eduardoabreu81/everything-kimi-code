@@ -1,0 +1,199 @@
+version: 1
+agent:
+  name: ekc
+  description: Everything Kimi Code — Agente principal que orquestra 64 subagents especializados
+  system_prompt_path: ./ekc.md
+  extend: default
+  subagents:
+    a11y-architect:
+      path: ./a11y-architect/agent.yaml
+      description: "Arquiteta solucoes de acessibilidade (a11y) para produtos digitais"
+    agent-creator:
+      path: ./agent-creator/agent.yaml
+      description: "Cria novos agents com persona, system prompt e exemplos de triggering"
+    agent-sdk-verifier-py:
+      path: ./agent-sdk-verifier-py/agent.yaml
+      description: "Verifica se uma aplicacao Python Agent SDK esta corretamente configurada"
+    agent-sdk-verifier-ts:
+      path: ./agent-sdk-verifier-ts/agent.yaml
+      description: "Verifica se uma aplicacao TypeScript Agent SDK esta corretamente configurada"
+    architect:
+      path: ./architect/agent.yaml
+      description: "Arquiteto de software geral — define estruturas e padroes de alto nivel"
+    build-error-resolver:
+      path: ./build-error-resolver/agent.yaml
+      description: "Resolve erros de build em projetos de forma generica"
+    code-architect:
+      path: ./code-architect/agent.yaml
+      description: "Arquiteto focado em decisoes de design de codigo e patterns"
+    code-explorer:
+      path: ./code-explorer/agent.yaml
+      description: "Explora codigo de forma rapida e read-only para entender estruturas"
+    code-reviewer:
+      path: ./code-reviewer/agent.yaml
+      description: "Revisao geral de codigo: caca a bugs, verificacao de guidelines e anti-patterns"
+    code-simplifier:
+      path: ./code-simplifier/agent.yaml
+      description: "Simplifica codigo complexo, removendo redundancias e melhorando legibilidade"
+    comment-analyzer:
+      path: ./comment-analyzer/agent.yaml
+      description: "Analisa comentarios de codigo para identificar inconsistencias"
+    conversation-analyzer:
+      path: ./conversation-analyzer/agent.yaml
+      description: "Analisa conversas e interacoes para identificar padroes e oportunidades"
+    cpp-build-resolver:
+      path: ./cpp-build-resolver/agent.yaml
+      description: "Resolve erros de build especificos de C/C++"
+    cpp-reviewer:
+      path: ./cpp-reviewer/agent.yaml
+      description: "Revisor especializado em codigo C/C++"
+    csharp-reviewer:
+      path: ./csharp-reviewer/agent.yaml
+      description: "Revisor especializado em codigo C#"
+    dart-build-resolver:
+      path: ./dart-build-resolver/agent.yaml
+      description: "Resolve erros de build especificos de Dart/Flutter"
+    database-reviewer:
+      path: ./database-reviewer/agent.yaml
+      description: "Revisa codigo relacionado a banco de dados: queries, schema, indices"
+    docs-lookup:
+      path: ./docs-lookup/agent.yaml
+      description: "Busca e consulta documentacao de bibliotecas e frameworks"
+    doc-updater:
+      path: ./doc-updater/agent.yaml
+      description: "Atualiza documentacao de projetos com base em mudancas recentes"
+    e2e-runner:
+      path: ./e2e-runner/agent.yaml
+      description: "Executa testes end-to-end e reporta resultados"
+    ecc-agents:
+      path: ./ecc-agents/agent.yaml
+      description: "Registro de subagents do ecossistema ECC"
+    feature-dev:
+      path: ./feature-dev/agent.yaml
+      description: "Workflow de 7 fases para desenvolvimento de features"
+    flutter-reviewer:
+      path: ./flutter-reviewer/agent.yaml
+      description: "Revisor especializado em codigo Flutter/Dart"
+    gan-evaluator:
+      path: ./gan-evaluator/agent.yaml
+      description: "Avaliador do harness GAN — verifica a qualidade do codigo gerado"
+    gan-generator:
+      path: ./gan-generator/agent.yaml
+      description: "Gerador do harness GAN — constroi aplicacoes de forma autonoma"
+    gan-planner:
+      path: ./gan-planner/agent.yaml
+      description: "Planejador do harness GAN para desenvolvimento autonomo"
+    git-clean-gone:
+      path: ./git-clean-gone/agent.yaml
+      description: "Remove branches locais marcadas como [gone] e worktrees associados"
+    git-commit:
+      path: ./git-commit/agent.yaml
+      description: "Cria commits descritivos baseados em git status/git diff"
+    git-commit-push-pr:
+      path: ./git-commit-push-pr/agent.yaml
+      description: "Cria branch, commit, push e abre PR via gh pr create"
+    github-code-reviewer:
+      path: ./github-code-reviewer/agent.yaml
+      description: "Review de PR no GitHub com scoring de confianca 0-100"
+    go-build-resolver:
+      path: ./go-build-resolver/agent.yaml
+      description: "Resolve erros de build especificos de Go"
+    go-reviewer:
+      path: ./go-reviewer/agent.yaml
+      description: "Revisor especializado em codigo Go"
+    healthcare-reviewer:
+      path: ./healthcare-reviewer/agent.yaml
+      description: "Revisor especializado em codigo de aplicacoes healthcare"
+    iterative-loop:
+      path: ./iterative-loop/agent.yaml
+      description: "Loop iterativo para refinamento progressivo de solucoes"
+    java-build-resolver:
+      path: ./java-build-resolver/agent.yaml
+      description: "Resolve erros de build especificos de Java"
+    java-reviewer:
+      path: ./java-reviewer/agent.yaml
+      description: "Revisor especializado em codigo Java"
+    kotlin-build-resolver:
+      path: ./kotlin-build-resolver/agent.yaml
+      description: "Resolve erros de build especificos de Kotlin"
+    kotlin-reviewer:
+      path: ./kotlin-reviewer/agent.yaml
+      description: "Revisor especializado em codigo Kotlin"
+    loop-operator:
+      path: ./loop-operator/agent.yaml
+      description: "Operador de loops autonomos — gerencia execucao continua de tarefas"
+    opensource-forker:
+      path: ./opensource-forker/agent.yaml
+      description: "Faz fork de projetos privados para preparacao de release open source"
+    opensource-packager:
+      path: ./opensource-packager/agent.yaml
+      description: "Empacota projetos sanitizados para release open source seguro"
+    opensource-sanitizer:
+      path: ./opensource-sanitizer/agent.yaml
+      description: "Sanitiza projetos privados removendo dados sensiveis"
+    output-style-guide:
+      path: ./output-style-guide/agent.yaml
+      description: "Define e aplica guias de estilo de output"
+    performance-optimizer:
+      path: ./performance-optimizer/agent.yaml
+      description: "Otimiza performance de codigo, identificando gargalos"
+    planner:
+      path: ./planner/agent.yaml
+      description: "Planeja tarefas e quebra objetivos em passos executaveis"
+    plugin-creator:
+      path: ./plugin-creator/agent.yaml
+      description: "Workflow de 8 fases para criar plugins do zero"
+    plugin-validator:
+      path: ./plugin-validator/agent.yaml
+      description: "Valida estrutura de plugins (manifest, commands, agents, skills)"
+    project-starter:
+      path: ./project-starter/agent.yaml
+      description: "Inicia novos projetos SDK com estrutura e configuracao adequadas"
+    pr-review:
+      path: ./pr-review/agent.yaml
+      description: "Orquestra 6 revisores especializados para revisao completa de PR"
+    pr-test-analyzer:
+      path: ./pr-test-analyzer/agent.yaml
+      description: "Analisa testes associados a um PR para verificar cobertura"
+    python-reviewer:
+      path: ./python-reviewer/agent.yaml
+      description: "Revisor especializado em codigo Python"
+    pytorch-build-resolver:
+      path: ./pytorch-build-resolver/agent.yaml
+      description: "Resolve erros de build especificos de PyTorch"
+    refactor-cleaner:
+      path: ./refactor-cleaner/agent.yaml
+      description: "Realiza refatoracoes de limpeza de codigo"
+    revise-project-docs:
+      path: ./revise-project-docs/agent.yaml
+      description: "Atualiza arquivos de documentacao com aprendizados da sessao"
+    rust-build-resolver:
+      path: ./rust-build-resolver/agent.yaml
+      description: "Resolve erros de build especificos de Rust"
+    rust-reviewer:
+      path: ./rust-reviewer/agent.yaml
+      description: "Revisor especializado em codigo Rust"
+    security-advisor:
+      path: ./security-advisor/agent.yaml
+      description: "Analisa codigo para vulnerabilidades e sugere remediacoes"
+    security-reviewer:
+      path: ./security-reviewer/agent.yaml
+      description: "Revisor especializado em seguranca — identifica riscos"
+    seo-specialist:
+      path: ./seo-specialist/agent.yaml
+      description: "Analisa e otimiza aspectos de SEO em aplicacoes web"
+    silent-failure-hunter:
+      path: ./silent-failure-hunter/agent.yaml
+      description: "Caca falhas silenciosas em codigo"
+    skill-reviewer:
+      path: ./skill-reviewer/agent.yaml
+      description: "Revisa qualidade de skills (trigger phrases, progressive disclosure)"
+    tdd-guide:
+      path: ./tdd-guide/agent.yaml
+      description: "Guia para desenvolvimento orientado a testes (TDD)"
+    type-design-analyzer:
+      path: ./type-design-analyzer/agent.yaml
+      description: "Analisa design de tipos e estruturas de dados"
+    typescript-reviewer:
+      path: ./typescript-reviewer/agent.yaml
+      description: "Revisor especializado em codigo TypeScript"
