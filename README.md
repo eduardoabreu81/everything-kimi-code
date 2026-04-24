@@ -1,34 +1,5 @@
 # EKC — Everything Kimi Code
 
-> **English below** ⬇️
-
----
-
-## 🇧🇷 Português
-
-O **EKC (Everything Kimi Code)** é um ecossistema open-source que converte, adapta e expande a experiência do **Claude Code (ECC)** para o **Kimi CLI** e **Kimi VS Code Extension**.
-
-### O que está incluído
-
-- **1 agente principal EKC + 64 subagentes especialistas** — code review, arquitetura, build, segurança, Git e orquestração
-- **206 skills reutilizáveis** — backend, frontend, DevOps, segurança, healthcare, negócios, mídia e mais
-- **4 flow skills** — workflows interativos: desenvolvimento de features, code review, PR review e GitHub code review
-- **Kimi-Mem (em desenvolvimento)** — fork do `claude-mem` com memória persistente e busca semântica
-- **Scripts de instalação** — copia project-level de skills para `.kimi/skills/`
-
-### Instalação
-
-Veja a seção em inglês abaixo para instruções detalhadas de instalação, uso e troubleshooting.
-
-### Licença
-
-- **Agents, Skills, CLI, docs, templates:** MIT
-- **kimi-mem/**: AGPL-3.0 (fork do claude-mem)
-
----
-
-## 🇺🇸 English
-
 **EKC (Everything Kimi Code)** is an open-source ecosystem that adapts and expands the **Claude Code (ECC)** experience for the **Kimi CLI**.
 
 It provides a collection of specialist agents, reusable skills, and interactive workflow flows designed to work with Kimi CLI's native tooling.
@@ -67,7 +38,7 @@ everything-kimi-code/
 ├── packages/
 │   ├── ekc-cli/         # CLI installer (planned)
 │   └── ekc-validator/   # Validation library (planned)
-├── docs/                # Documentation (pt-BR + en)
+├── docs/                # Documentation (en + pt-BR)
 ├── templates/           # Templates for creating agents/skills
 ├── scripts/             # Installers and utilities
 └── tests/               # Integration tests
@@ -207,7 +178,7 @@ Decision diamonds (`{Condition?}`) and loopback edges (`B -->|No| B`) are fully 
 
 Check the skill file for these required elements:
 - `type: flow` in the YAML frontmatter
-- A Mermaid or D2 diagram block (````mermaid` or ````d2`)
+- A Mermaid or D2 diagram block (` ```mermaid ` or ` ```d2 `)
 - `BEGIN` and `END` nodes in the diagram
 - No `<br/>` tags inside Mermaid labels
 
