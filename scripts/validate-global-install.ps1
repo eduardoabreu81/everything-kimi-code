@@ -1,6 +1,5 @@
-#!/usr/bin/env pwsh
-# EKC Project Install Validation
-# Usage: .\validate-project-install.ps1 [-Quiet]
+# EKC Global Install Validation
+# Usage: .\validate-global-install.ps1 [-Quiet]
 
 [CmdletBinding()]
 param(
@@ -9,9 +8,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$RepoRoot = Resolve-Path "$ScriptDir\.." | Select-Object -ExpandProperty Path
-$Target = Join-Path (Join-Path $RepoRoot ".kimi") "skills"
+$Target = Join-Path $HOME ".kimi/skills"
 $StampFile = Join-Path $Target ".ekc-installed"
 
 function Write-Info($msg) { if (-not $Quiet) { Write-Host $msg } }
@@ -22,12 +19,11 @@ function Write-Warn($msg) { if (-not $Quiet) { Write-Host "  [WARN] $msg" -Foreg
 $Failures = 0
 $Warnings = 0
 
-Write-Info "EKC Project Install Validation"
-Write-Info "=============================="
+Write-Info "EKC Global Install Validation"
+Write-Info "============================="
 Write-Info "Target: $Target"
 Write-Info ""
 
-# 1. Target directory exists
 if (Test-Path $Target) {
     Write-Pass "Directory exists"
 } else {
@@ -38,7 +34,6 @@ if (Test-Path $Target) {
     exit 1
 }
 
-# 2. Stamp file exists
 if (Test-Path $StampFile) {
     Write-Pass "Stamp file found"
 } else {
@@ -46,7 +41,6 @@ if (Test-Path $StampFile) {
     $Warnings++
 }
 
-# 3. Each skill has SKILL.md
 $SkillDirs = Get-ChildItem -Path $Target -Directory | Sort-Object Name
 $TotalSkills = $SkillDirs.Count
 $MissingSkillMd = 0
@@ -66,7 +60,6 @@ if ($MissingSkillMd -eq 0) {
     Write-Fail "$MissingSkillMd skills missing SKILL.md"
 }
 
-# 4. YAML frontmatter check
 $MissingFrontmatter = 0
 foreach ($Dir in $SkillDirs) {
     $MdPath = Join-Path $Dir.FullName "SKILL.md"
@@ -83,7 +76,6 @@ if ($MissingFrontmatter -eq 0) {
     $Warnings++
 }
 
-# 5. Flow skill validation
 $FlowNames = @("code-review", "feature-dev", "github-code-reviewer", "pr-review")
 Write-Info ""
 Write-Info "Flow Skill Validation:"
@@ -176,7 +168,6 @@ foreach ($FlowName in $FlowNames) {
     }
 }
 
-# Summary
 Write-Info ""
 Write-Info "=============================="
 if ($Failures -eq 0 -and $Warnings -eq 0) {
@@ -192,16 +183,15 @@ if ($Failures -eq 0 -and $Warnings -eq 0) {
 Write-Info ""
 Write-Info "Manual Test Required"
 Write-Info "===================="
-Write-Info "1. Run: kimi"
+Write-Info "1. Open VS Code or run 'kimi'"
 Write-Info "2. Type: /help"
-Write-Info "3. Look for 'Project' skills section"
+Write-Info "3. Look for EKC skills and flows"
 Write-Info "4. Type: /flow"
-Write-Info "5. Confirm these 4 flows appear in autocomplete:"
+Write-Info "5. Confirm these 4 flows appear:"
 Write-Info "     /flow:code-review"
 Write-Info "     /flow:feature-dev"
 Write-Info "     /flow:github-code-reviewer"
 Write-Info "     /flow:pr-review"
-Write-Info "6. Run one: /flow:hello-flow (or /flow:feature-dev)"
 Write-Info ""
 
 exit $Failures
