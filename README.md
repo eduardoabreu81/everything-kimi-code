@@ -22,6 +22,8 @@ Install globally so EKC is available in every project and in VS Code.
 ### Windows (PowerShell)
 
 ```powershell
+git clone https://github.com/eduardoabreu81/everything-kimi-code.git
+cd everything-kimi-code
 .\scripts\install-global.ps1
 .\scripts\validate-global-install.ps1
 ```
@@ -29,6 +31,8 @@ Install globally so EKC is available in every project and in VS Code.
 ### Linux / macOS / WSL (Bash)
 
 ```bash
+git clone https://github.com/eduardoabreu81/everything-kimi-code.git
+cd everything-kimi-code
 ./scripts/install-global.sh
 ./scripts/validate-global-install.sh
 ```
@@ -64,9 +68,9 @@ kimi
 Then use the same commands:
 
 ```
-/flow
-/flow:feature-dev
-/skill:<name>
+/flow:              # Browse available flows via autocomplete
+/flow:feature-dev   # Execute a specific flow
+/skill:<name>       # Load a skill into context
 ```
 
 ## Available Flows
@@ -89,7 +93,7 @@ For project-level install, see `scripts/install-project.ps1` (PowerShell) or `sc
 
 ## Update EKC
 
-Pull the latest changes and reinstall:
+Existing users can update by pulling the latest changes and rerunning the global installer:
 
 ```powershell
 git pull
