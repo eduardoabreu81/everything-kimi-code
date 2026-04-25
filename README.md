@@ -1,172 +1,131 @@
 # EKC — Everything Kimi Code
 
-**EKC (Everything Kimi Code)** is a Kimi CLI port and adaptation of [Everything Claude Code](https://github.com/affaan-m/everything-claude-code).
+EKC is a collection of agents, reusable skills, and interactive flows for the [Kimi CLI](https://moonshotai.github.io/kimi-cli/) and the Kimi Code extension for VS Code. It is a port and adaptation of the [Everything Claude Code](https://github.com/affaan-m/everything-claude-code) ecosystem, rebuilt for Kimi's tooling and conventions.
 
-The goal is not to copy ECC one-to-one. EKC keeps the parts that map well to Kimi, such as agents, subagents, reusable skills, and flow-based workflows, while adapting, replacing, or excluding Claude-specific surfaces that do not work the same way in Kimi CLI, such as Claude Code commands, hooks, plugin marketplace behavior, `.claude` paths, and `CLAUDE.md`-specific workflows.
+After installation, EKC adds 64 specialist subagents, 206 reusable skills, and 4 interactive workflows to your Kimi environment. These run through standard Kimi commands such as `/skill:<name>` and `/flow:<name>`, both in the terminal and inside VS Code.
 
-### What's Included
+EKC is not a one-to-one clone of Claude Code. Claude-specific commands, hooks, plugin behavior, `.claude` paths, and `CLAUDE.md`-specific workflows are adapted, replaced, or excluded where they do not map cleanly to Kimi.
 
-- **1 EKC main agent + 64 specialist subagents** — code review, architecture, build, security, Git, and orchestration
-- **206 reusable skills** — backend, frontend, DevOps, security, healthcare, business, media, and more
-- **4 flow skills** — interactive workflows: feature development, code review, PR review, and GitHub code review
-- **Kimi-Mem (in development)** — fork of `claude-mem` with persistent memory and semantic search
-- **Project-level install scripts** — copy-based installation of skills to `.kimi/skills/`
+## Who It Is For
 
-### Current Status
+Developers who already use Kimi for coding assistance and want ready-made workflows for:
 
-The foundation phase is complete:
-- 64 subagents migrated and structured for Kimi CLI
-- 206 skills migrated and organized
-- 4 flow skills created and validated
-- Project-level install scripts implemented (PowerShell + Bash)
+- Code review with language-specialized reviewers
+- Feature development from discovery to delivery
+- GitHub PR review with scoring and automated comments
+- General PR review orchestrating multiple reviewers
 
-Next: `ekc-cli` interactive installer, `ekc-validator` library, and Kimi-Mem implementation.
+## Quick Start
 
-### Requirements
+Install globally so EKC is available in every project and in VS Code.
 
-- **Kimi CLI** `1.39.0` or later
-- **Git** (for cloning and updates)
-- **PowerShell** (Windows) or **Bash** (Linux/macOS/WSL)
-
-### Repository Structure
-
-```
-everything-kimi-code/
-├── agents/              # 1 main agent + 64 specialist subagents (.md + .yaml)
-├── skills/              # 206 skills (SKILL.md in subdirectories) — source of truth
-├── kimi-mem/            # Fork of claude-mem (AGPL-3.0)
-├── packages/
-│   ├── ekc-cli/         # CLI installer (planned)
-│   └── ekc-validator/   # Validation library (planned)
-├── docs/                # Documentation
-├── templates/           # Templates for creating agents/skills
-├── scripts/             # Installers and utilities
-└── tests/               # Integration tests
-```
-
-**Important:** `skills/` is the source-of-truth directory. It contains the canonical, versioned skill definitions. Do not edit files inside `.kimi/skills/` directly.
-
-### Installation
-
-EKC supports two installation modes:
-
-| Mode | Target | Purpose |
-|------|--------|---------|
-| **Global** | `~/.kimi/skills/` | Primary mode for daily use. Skills are available in VS Code Extension and Kimi CLI in any project. |
-| **Project** | `.kimi/skills/` | Secondary mode for EKC repo development and local testing. |
-
-**No symlinks are used.** Symlinks are explicitly prohibited in EKC to avoid cross-platform issues.
-
-#### Global Install (Recommended for Daily Use)
-
-Copies skills to `~/.kimi/skills/` so they are available everywhere.
-
-**Windows (PowerShell)**
+### Windows (PowerShell)
 
 ```powershell
 .\scripts\install-global.ps1
 .\scripts\validate-global-install.ps1
-.\scripts\clean-global-install.ps1 -Yes
 ```
 
-**Linux / macOS / WSL (Bash)**
+### Linux / macOS / WSL (Bash)
 
 ```bash
 ./scripts/install-global.sh
 ./scripts/validate-global-install.sh
-./scripts/clean-global-install.sh --yes
 ```
 
-#### Project Install (For EKC Development)
+After installing, reload VS Code or restart the Kimi CLI session.
 
-Copies skills to `.kimi/skills/` inside the EKC repo for local testing.
+## Use in VS Code
 
-**Windows (PowerShell)**
+When EKC is installed globally in `~/.kimi/skills/`, the Kimi Code extension for VS Code discovers the skills automatically.
 
-```powershell
-.\scripts\install-project.ps1
-.\scripts\validate-project-install.ps1
-.\scripts\clean-project-install.ps1 -Yes
+Open the Kimi chat panel and type:
+
+```
+/skill:<name>     # Load a skill into context
+/flow:<name>      # Execute an interactive workflow
 ```
 
-**Linux / macOS / WSL (Bash)**
+Examples:
 
-```bash
-./scripts/install-project.sh
-./scripts/validate-project-install.sh
-./scripts/clean-project-install.sh --yes
+```
+/flow:feature-dev
+/flow:code-review
 ```
 
-#### Install Options
+## Use in Kimi CLI
 
-| Flag | PowerShell | Bash | Description |
-|------|-----------|------|-------------|
-| Force overwrite | `-Force` | `--force` | Overwrite existing skills without prompting |
-| Dry run | `-DryRun` | `--dry-run` | Show what would be copied without copying |
-| Quiet | `-Quiet` | `--quiet` | Suppress non-error output |
-
-### How to Use Skills
-
-After installation, start Kimi CLI inside the project directory:
+In any terminal, run:
 
 ```bash
 kimi
 ```
 
-Kimi CLI discovers project-level skills in `.kimi/skills/`. Use them with:
+Then use the same commands:
 
 ```
-/skill:<name>       # Load a skill for context
-/flow:<name>        # Execute a flow skill interactively
+/flow
+/flow:feature-dev
+/skill:<name>
 ```
 
-**Difference between `/skill` and `/flow`:**
-- `/skill:<name>` loads the `SKILL.md` content into context as a regular skill.
-- `/flow:<name>` executes the skill as an interactive flow, following the Mermaid/D2 diagram from `BEGIN` to `END`.
-
-**VS Code Extension:** When skills are installed globally in `~/.kimi/skills/`, the Kimi VS Code Extension discovers both `/skill:<name>` and `/flow:<name>` commands. Flow skills appear in autocomplete and execute interactively in the Extension chat panel.
-
-### Flow Skills
-
-EKC provides 4 flow skills for interactive workflows:
+## Available Flows
 
 | Flow | Command | Description |
 |------|---------|-------------|
-| Feature Development | `/flow:feature-dev` | Complete feature development workflow — discovery, exploration, architecture, implementation, review |
-| Code Review | `/flow:code-review` | Language-detected code review with specialized reviewers |
-| PR Review | `/flow:pr-review` | Complete PR review orchestrating 6 specialized reviewers |
+| Feature Development | `/flow:feature-dev` | Complete workflow from discovery to delivery |
+| Code Review | `/flow:code-review` | Language-detected review with specialized reviewers |
+| PR Review | `/flow:pr-review` | Orchestrates 6 specialized reviewers |
 | GitHub Code Review | `/flow:github-code-reviewer` | GitHub PR review with scoring and automated comments |
 
-### What to Commit and What to Ignore
+## Installation Modes
 
-| Path | Status | Reason |
-|------|--------|--------|
-| `skills/` | **Commit** | Source of truth — canonical skill definitions |
-| `agents/` | **Commit** | Agent definitions (.md + .yaml) |
-| `scripts/` | **Commit** | Installers and utilities |
-| `.kimi/skills/` | **Ignore** | Generated runtime copies — created by install scripts |
+| Mode | Target | Purpose |
+|------|--------|---------|
+| **Global** | `~/.kimi/skills/` | Primary mode. Skills are available everywhere: VS Code, Kimi CLI, any project. |
+| **Project** | `.kimi/skills/` | Development and testing mode. Use only when working on the EKC repository itself. |
 
-The file `.gitignore` already includes `.kimi/skills/`. If you see runtime copies in `git status`, verify that `.gitignore` contains:
+For project-level install, see `scripts/install-project.ps1` (PowerShell) or `scripts/install-project.sh` (Bash).
 
-```
-.kimi/skills/
-```
+## Update EKC
 
-### Editing Skills
-
-1. Edit the skill in `skills/<name>/SKILL.md`
-2. Re-run the install script to copy changes to `.kimi/skills/`
-3. Restart Kimi CLI to pick up the changes
+Pull the latest changes and reinstall:
 
 ```powershell
-.\scripts\install-project.ps1 -Force
+git pull
+.\scripts\install-global.ps1 -Force
+.\scripts\validate-global-install.ps1
 ```
 
-### Known Limitations
+Or with Bash:
 
-**Avoid `<br/>` inside Mermaid node labels for Kimi flow skills.**
+```bash
+git pull
+./scripts/install-global.sh --force
+./scripts/validate-global-install.sh
+```
 
-Kimi CLI 1.39.0 silently rejects flow skills that contain `<br/>` tags inside Mermaid node labels. Use ` - ` (space-hyphen-space) instead:
+## Uninstall
+
+Remove the global EKC installation:
+
+```powershell
+.\scripts\clean-global-install.ps1 -Yes
+```
+
+Or with Bash:
+
+```bash
+./scripts/clean-global-install.sh --yes
+```
+
+This deletes `~/.kimi/skills/` only if it was created by EKC (protected by a stamp file).
+
+## Known Limitations
+
+**Mermaid node labels must not contain `<br/>` tags.**
+
+Kimi CLI 1.39.0 silently rejects flow skills that contain `<br/>` inside Mermaid labels. Use ` - ` (space-hyphen-space) instead:
 
 ```text
 # Bad — flow will not be recognized
@@ -176,54 +135,23 @@ B[Identify Language<br/>Detect the language]
 B[Identify Language - Detect the language]
 ```
 
-Decision diamonds (`{Condition?}`) and loopback edges (`B -->|No| B`) are fully supported.
+**Flow diagrams must not contain disconnected (dead) nodes.**
 
-### Troubleshooting
+Every node in a flow diagram must have an outgoing edge (except END) and an incoming edge (except BEGIN). A disconnected node causes the flow to be silently rejected by Kimi CLI.
 
-#### `/flow` does not show EKC flows
+**Decision diamonds and loopback edges are fully supported.**
 
-1. Ensure you are using **global install** (`~/.kimi/skills/`) for daily use:
-   ```powershell
-   .\scripts\install-global.ps1 -Force
-   .\scripts\validate-global-install.ps1
-   ```
-2. For project-level testing, reinstall to `.kimi/skills/`:
-   ```powershell
-   .\scripts\install-project.ps1 -Force
-   .\scripts\validate-project-install.ps1
-   ```
-3. Restart Kimi CLI or reload the VS Code window.
+## Project Background
 
-#### Flow appears as `/skill:<name>` but not as `/flow:<name>`
+EKC is a Kimi CLI port and adaptation of [Everything Claude Code](https://github.com/affaan-m/everything-claude-code). The goal is not to copy ECC one-to-one. EKC keeps the parts that map well to Kimi — agents, reusable skills, and flow-based workflows — while adapting or excluding Claude-specific surfaces that do not work the same way.
 
-Check the skill file for these required elements:
-- `type: flow` in the YAML frontmatter
-- A Mermaid or D2 diagram block (` ```mermaid ` or ` ```d2 `)
-- `BEGIN` and `END` nodes in the diagram
-- No `<br/>` tags inside Mermaid labels
-- **No disconnected (dead) nodes** — every node must have an outgoing edge (except END)
+## For Contributors
 
-#### Runtime copies appear in `git status`
+If you want to add skills, fix flows, or improve scripts, read [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow, validation rules, and commit conventions.
 
-Check that `.gitignore` contains `.kimi/skills/`:
-
-```bash
-git check-ignore -v .kimi/skills/.ekc-installed
-```
-
-If it returns nothing, add `.kimi/skills/` to `.gitignore`.
-
-### Contributing
-
-Read [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
-
-### License
+## License
 
 - **Agents, Skills, CLI, docs, templates:** MIT
 - **kimi-mem/**: AGPL-3.0 (claude-mem fork)
 
 See [LICENSE](LICENSE) for full details.
-
----
-
-*Last updated: 2026-04-24*
