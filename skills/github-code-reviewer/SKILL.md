@@ -14,6 +14,7 @@ flowchart TD
     B --> C{Eligible?}
     C -->|No| D[Abort - Inform user to install gh CLI]
     C -->|Yes| E[View PR - Collect PR info via gh pr view]
+    D --> L([END])
     E --> F[Read Context - Read CLAUDE.md / AGENTS.md from project]
     F --> G[Parallel Review - Execute 5 reviewers in parallel]
     G --> H[Scoring - Score the PR 0-100 based on rubric]
@@ -46,7 +47,7 @@ flowchart TD
 ## PR comment format
 
 ```markdown
-## 🤖 EKC Code Review — Score: XX/100
+## EKC Code Review — Score: XX/100
 
 ### Critical Issues
 - ...
