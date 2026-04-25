@@ -38,7 +38,7 @@ everything-kimi-code/
 ├── packages/
 │   ├── ekc-cli/         # CLI installer (planned)
 │   └── ekc-validator/   # Validation library (planned)
-├── docs/                # Documentation (en + pt-BR)
+├── docs/                # Documentation
 ├── templates/           # Templates for creating agents/skills
 ├── scripts/             # Installers and utilities
 └── tests/               # Integration tests
@@ -48,33 +48,52 @@ everything-kimi-code/
 
 ### Installation
 
-EKC uses a **copy-based project-level installation**. Skills are copied from `skills/` (versioned) to `.kimi/skills/` (runtime), which is the directory where Kimi CLI discovers project-level skills.
+EKC supports two installation modes:
+
+| Mode | Target | Purpose |
+|------|--------|---------|
+| **Global** | `~/.kimi/skills/` | Primary mode for daily use. Skills are available in VS Code Extension and Kimi CLI in any project. |
+| **Project** | `.kimi/skills/` | Secondary mode for EKC repo development and local testing. |
 
 **No symlinks are used.** Symlinks are explicitly prohibited in EKC to avoid cross-platform issues.
 
-#### Windows (PowerShell)
+#### Global Install (Recommended for Daily Use)
+
+Copies skills to `~/.kimi/skills/` so they are available everywhere.
+
+**Windows (PowerShell)**
 
 ```powershell
-# Install: copy skills/ → .kimi/skills/
+.\scripts\install-global.ps1
+.\scripts\validate-global-install.ps1
+.\scripts\clean-global-install.ps1 -Yes
+```
+
+**Linux / macOS / WSL (Bash)**
+
+```bash
+./scripts/install-global.sh
+./scripts/validate-global-install.sh
+./scripts/clean-global-install.sh --yes
+```
+
+#### Project Install (For EKC Development)
+
+Copies skills to `.kimi/skills/` inside the EKC repo for local testing.
+
+**Windows (PowerShell)**
+
+```powershell
 .\scripts\install-project.ps1
-
-# Validate the installation
 .\scripts\validate-project-install.ps1
-
-# Clean (removes .kimi/skills/)
 .\scripts\clean-project-install.ps1 -Yes
 ```
 
-#### Linux / macOS / WSL (Bash)
+**Linux / macOS / WSL (Bash)**
 
 ```bash
-# Install: copy skills/ → .kimi/skills/
 ./scripts/install-project.sh
-
-# Validate the installation
 ./scripts/validate-project-install.sh
-
-# Clean (removes .kimi/skills/)
 ./scripts/clean-project-install.sh --yes
 ```
 
@@ -104,6 +123,8 @@ Kimi CLI discovers project-level skills in `.kimi/skills/`. Use them with:
 **Difference between `/skill` and `/flow`:**
 - `/skill:<name>` loads the `SKILL.md` content into context as a regular skill.
 - `/flow:<name>` executes the skill as an interactive flow, following the Mermaid/D2 diagram from `BEGIN` to `END`.
+
+**VS Code Extension:** When skills are installed globally in `~/.kimi/skills/`, the Kimi VS Code Extension discovers both `/skill:<name>` and `/flow:<name>` commands. Flow skills appear in autocomplete and execute interactively in the Extension chat panel.
 
 ### Flow Skills
 
@@ -161,18 +182,17 @@ Decision diamonds (`{Condition?}`) and loopback edges (`B -->|No| B`) are fully 
 
 #### `/flow` does not show EKC flows
 
-1. Run the install script:
+1. Ensure you are using **global install** (`~/.kimi/skills/`) for daily use:
    ```powershell
-   .\scripts\install-project.ps1
+   .\scripts\install-global.ps1 -Force
+   .\scripts\validate-global-install.ps1
    ```
-2. Validate the installation:
+2. For project-level testing, reinstall to `.kimi/skills/`:
    ```powershell
+   .\scripts\install-project.ps1 -Force
    .\scripts\validate-project-install.ps1
    ```
-3. Restart Kimi CLI:
-   ```bash
-   kimi
-   ```
+3. Restart Kimi CLI or reload the VS Code window.
 
 #### Flow appears as `/skill:<name>` but not as `/flow:<name>`
 
@@ -181,6 +201,7 @@ Check the skill file for these required elements:
 - A Mermaid or D2 diagram block (` ```mermaid ` or ` ```d2 `)
 - `BEGIN` and `END` nodes in the diagram
 - No `<br/>` tags inside Mermaid labels
+- **No disconnected (dead) nodes** — every node must have an outgoing edge (except END)
 
 #### Runtime copies appear in `git status`
 
