@@ -108,6 +108,13 @@ else
   FAILURES=$((FAILURES + 1))
 fi
 
+if [[ -f "${AGENT_TARGET}/ekc.md" ]]; then
+  pass "Main agent (ekc.md) exists"
+else
+  fail "Main agent (ekc.md) not found"
+  FAILURES=$((FAILURES + 1))
+fi
+
 TOTAL_AGENTS=0
 MISSING_AGENT_FILES=0
 for agent_dir in "${AGENT_TARGET}"/*/; do
@@ -152,18 +159,21 @@ for flow_name in "${FLOW_NAMES[@]}"; do
   has_diagram=0
   has_begin=0
   has_end=0
+  has_br=0
 
   if echo "$content" | grep -q 'type:\s*flow'; then has_type_flow=1; fi
   if echo "$content" | grep -qE '```mermaid|```d2'; then has_diagram=1; fi
   if echo "$content" | grep -qE '\(\[BEGIN\]\)|BEGIN\s*->|->\s*BEGIN|:BEGIN'; then has_begin=1; fi
   if echo "$content" | grep -qE '\(\[END\]\)|->\s*END|END\s*:'; then has_end=1; fi
+  if echo "$content" | grep -q '<br'; then has_br=1; fi
 
   details=""
   ok=1
   if [[ $has_type_flow -eq 1 ]]; then details+="type=flow "; else details+="type=MISSING "; ok=0; fi
   if [[ $has_diagram -eq 1 ]]; then details+="diagram=YES "; else details+="diagram=MISSING "; ok=0; fi
   if [[ $has_begin -eq 1 ]]; then details+="begin=YES "; else details+="begin=MISSING "; ok=0; fi
-  if [[ $has_end -eq 1 ]]; then details+="end=YES"; else details+="end=MISSING"; ok=0; fi
+  if [[ $has_end -eq 1 ]]; then details+="end=YES "; else details+="end=MISSING "; ok=0; fi
+  if [[ $has_br -eq 0 ]]; then details+="no-br=YES"; else details+="no-br=FAIL"; ok=0; fi
 
   if [[ $ok -eq 1 ]]; then
     pass "${flow_name}: ${details}"

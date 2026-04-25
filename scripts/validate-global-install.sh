@@ -101,6 +101,13 @@ else
   FAILURES=$((FAILURES + 1))
 fi
 
+if [[ -f "${AGENT_TARGET}/ekc.md" ]]; then
+  pass "Main agent (ekc.md) exists"
+else
+  fail "Main agent (ekc.md) not found"
+  FAILURES=$((FAILURES + 1))
+fi
+
 TOTAL_AGENTS=0
 MISSING_AGENT_FILES=0
 for agent_dir in "${AGENT_TARGET}"/*/; do

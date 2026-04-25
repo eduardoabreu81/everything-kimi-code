@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# EKC Global Install — Copy skills/ to ~/.kimi/skills/
+# EKC Global Install — Copy skills/ and agents/ to ~/.kimi/
 # Usage: ./install-global.sh [-f|--force] [-n|--dry-run] [-q|--quiet]
 
 set -euo pipefail
@@ -95,6 +95,9 @@ AGENT_COPIED=0
 AGENT_UPDATED=0
 AGENT_SKIPPED=0
 if [[ -d "$AGENT_SOURCE" ]]; then
+  if [[ $DRYRUN -eq 0 ]]; then
+    mkdir -p "$AGENT_TARGET"
+  fi
   for agent_dir in "$AGENT_SOURCE"/*/; do
     [[ -d "$agent_dir" ]] || continue
     agent_name="$(basename "$agent_dir")"

@@ -1,4 +1,4 @@
-﻿# EKC Project Install - Copy skills/ to .kimi/skills/
+﻿# EKC Project Install - Copy skills/ and agents/ to .kimi/
 # Usage: .\install-project.ps1 [-Force] [-DryRun] [-Quiet]
 
 [CmdletBinding()]
@@ -34,6 +34,14 @@ if (-not (Test-Path $TargetParent)) {
         Write-Info "[DRY-RUN] Would create: $TargetParent"
     } else {
         New-Item -ItemType Directory -Path $TargetParent -Force | Out-Null
+    }
+}
+
+if (-not (Test-Path $AgentTarget)) {
+    if ($DryRun) {
+        Write-Info "[DRY-RUN] Would create: $AgentTarget"
+    } else {
+        New-Item -ItemType Directory -Path $AgentTarget -Force | Out-Null
     }
 }
 
