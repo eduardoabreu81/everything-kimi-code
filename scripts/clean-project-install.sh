@@ -7,6 +7,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 TARGET="${REPO_ROOT}/.kimi/skills"
+AGENT_TARGET="${REPO_ROOT}/.kimi/agents"
 STAMP_FILE="${TARGET}/.ekc-installed"
 
 YES=0
@@ -43,35 +44,51 @@ if [[ ! -f "$STAMP_FILE" ]]; then
   exit 1
 fi
 
-# Count skills
+# Count skills and agents
 SKILL_COUNT=0
 for d in "$TARGET"/*/; do
   [[ -d "$d" ]] || continue
   SKILL_COUNT=$((SKILL_COUNT + 1))
 done
 
-info "WARNING: This will delete ${SKILL_COUNT} skills installed by EKC."
-info "Your source directory (skills/) will NOT be touched."
+AGENT_COUNT=0
+if [[ -d "$AGENT_TARGET" ]]; then
+  for d in "$AGENT_TARGET"/*/; do
+    [[ -d "$d" ]] || continue
+    AGENT_COUNT=$((AGENT_COUNT + 1))
+  done
+fi
+
+info "WARNING: This will delete ${SKILL_COUNT} skills and ${AGENT_COUNT} agents installed by EKC."
+info "Your source directory (skills/, agents/) will NOT be touched."
 info ""
 
 if [[ $DRYRUN -eq 1 ]]; then
   info "[DRY-RUN] Would remove: ${TARGET}"
+  if [[ -d "$AGENT_TARGET" ]]; then
+    info "[DRY-RUN] Would remove: ${AGENT_TARGET}"
+  fi
   info "[DRY-RUN] No files were deleted."
   exit 0
 fi
 
 # Confirmation
 if [[ $YES -eq 0 ]]; then
-  read -rp "Remove .kimi/skills/ and all EKC installed skills? [y/N] " response
+  read -rp "Remove .kimi/skills/ and .kimi/agents/? [y/N] " response
   if [[ ! "$response" =~ ^[Yy]([Ee][Ss])?$ ]]; then
     info "Cancelled."
     exit 0
   fi
 fi
 
-# Remove only .kimi/skills/, never .kimi/
+# Remove only .kimi/skills/ and .kimi/agents/, never .kimi/
 rm -rf "$TARGET"
 ok "Removed: ${TARGET}"
+
+if [[ -d "$AGENT_TARGET" ]]; then
+  rm -rf "$AGENT_TARGET"
+  ok "Removed: ${AGENT_TARGET}"
+fi
 
 info ""
 info "Result: Clean complete."

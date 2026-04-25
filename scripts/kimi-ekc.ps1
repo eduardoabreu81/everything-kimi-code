@@ -10,7 +10,7 @@ $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repoRoot = Resolve-Path (Join-Path $scriptDir "..")
 
 # Resolve absolute path to agent file
-$agentFile = Join-Path $repoRoot "agents\ekc\agent.yaml"
+$agentFile = Join-Path $repoRoot "agents\ekc.yaml"
 
 if (-not (Test-Path $agentFile)) {
     Write-Error "EKC agent file not found: $agentFile"

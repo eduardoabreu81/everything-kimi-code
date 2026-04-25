@@ -12,6 +12,7 @@ $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $RepoRoot = Resolve-Path "$ScriptDir\.." | Select-Object -ExpandProperty Path
 $Target = Join-Path (Join-Path $RepoRoot ".kimi") "skills"
+$AgentTarget = Join-Path (Join-Path $RepoRoot ".kimi") "agents"
 $StampFile = Join-Path $Target ".ekc-installed"
 
 function Write-Info($msg) { if (-not $Quiet) { Write-Host $msg } }
@@ -83,7 +84,58 @@ if ($MissingFrontmatter -eq 0) {
     $Warnings++
 }
 
-# 5. Flow skill validation
+# 5. Agent validation
+Write-Info ""
+Write-Info "Agent Validation:"
+
+if (Test-Path $AgentTarget) {
+    Write-Pass "Agents directory exists"
+} else {
+    Write-Fail "Agents directory not found: $AgentTarget"
+    $Failures++
+}
+
+$EkcYaml = Join-Path $AgentTarget "ekc.yaml"
+$EkcMd = Join-Path $AgentTarget "ekc.md"
+if (Test-Path $EkcYaml) {
+    Write-Pass "Main agent (ekc.yaml) exists"
+} else {
+    Write-Fail "Main agent (ekc.yaml) not found"
+    $Failures++
+}
+if (Test-Path $EkcMd) {
+    Write-Pass "Main agent (ekc.md) exists"
+} else {
+    Write-Fail "Main agent (ekc.md) not found"
+    $Failures++
+}
+
+$AgentDirs = Get-ChildItem -Path $AgentTarget -Directory -ErrorAction SilentlyContinue | Sort-Object Name
+$TotalAgents = $AgentDirs.Count
+$MissingAgentFiles = 0
+
+foreach ($Dir in $AgentDirs) {
+    $AgentMd = Join-Path $Dir.FullName "agent.md"
+    $AgentYaml = Join-Path $Dir.FullName "agent.yaml"
+    if (-not (Test-Path $AgentMd)) {
+        Write-Fail "$($Dir.Name): missing agent.md"
+        $MissingAgentFiles++
+        $Failures++
+    }
+    if (-not (Test-Path $AgentYaml)) {
+        Write-Fail "$($Dir.Name): missing agent.yaml"
+        $MissingAgentFiles++
+        $Failures++
+    }
+}
+
+if ($MissingAgentFiles -eq 0) {
+    Write-Pass "All $TotalAgents subagents have agent.md + agent.yaml"
+} else {
+    Write-Fail "$MissingAgentFiles agent file(s) missing"
+}
+
+# 6. Flow skill validation
 $FlowNames = @("code-review", "feature-dev", "github-code-reviewer", "pr-review")
 Write-Info ""
 Write-Info "Flow Skill Validation:"
@@ -182,6 +234,7 @@ Write-Info "=============================="
 if ($Failures -eq 0 -and $Warnings -eq 0) {
     Write-Info "Result: ALL CHECKS PASSED"
     Write-Info "  Skills: $TotalSkills"
+    Write-Info "  Agents: $TotalAgents"
     Write-Info "  Flows:  4/4 valid"
 } elseif ($Failures -eq 0) {
     Write-Info "Result: PASSED WITH WARNINGS ($Warnings)"

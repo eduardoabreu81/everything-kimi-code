@@ -10,6 +10,9 @@ SOURCE="${REPO_ROOT}/skills"
 TARGET="${HOME}/.kimi/skills"
 STAMP_FILE="${TARGET}/.ekc-installed"
 
+AGENT_SOURCE="${REPO_ROOT}/agents"
+AGENT_TARGET="${HOME}/.kimi/agents"
+
 FORCE=0
 DRYRUN=0
 QUIET=0
@@ -87,6 +90,70 @@ for skill_dir in "$SOURCE"/*/; do
   ok "$action $skill_name"
 done
 
+# Copy agents
+AGENT_COPIED=0
+AGENT_UPDATED=0
+AGENT_SKIPPED=0
+if [[ -d "$AGENT_SOURCE" ]]; then
+  for agent_dir in "$AGENT_SOURCE"/*/; do
+    [[ -d "$agent_dir" ]] || continue
+    agent_name="$(basename "$agent_dir")"
+    agent_dest="${AGENT_TARGET}/${agent_name}"
+    agent_yaml="${agent_dir}/agent.yaml"
+    agent_md="${agent_dir}/agent.md"
+
+    if [[ ! -f "$agent_yaml" && ! -f "$agent_md" ]]; then
+      continue
+    fi
+
+    agent_action=""
+    if [[ ! -d "$agent_dest" ]]; then
+      agent_action="copy"
+    elif [[ $FORCE -eq 1 ]]; then
+      agent_action="overwrite"
+    else
+      ((AGENT_SKIPPED++)) || true
+      continue
+    fi
+
+    if [[ $DRYRUN -eq 1 ]]; then
+      info "[DRY-RUN] Would ${agent_action} agent: ${agent_name}"
+      if [[ "$agent_action" == "copy" ]]; then ((AGENT_COPIED++)) || true; else ((AGENT_UPDATED++)) || true; fi
+      continue
+    fi
+
+    if [[ "$agent_action" == "overwrite" ]]; then
+      rm -rf "$agent_dest"
+    fi
+
+    cp -r "$agent_dir" "$agent_dest"
+    if [[ "$agent_action" == "copy" ]]; then ((AGENT_COPIED++)) || true; else ((AGENT_UPDATED++)) || true; fi
+    ok "$agent_action agent $agent_name"
+  done
+
+  # Copy main agent files
+  if [[ -f "${AGENT_SOURCE}/ekc.yaml" ]]; then
+    if [[ ! -f "${AGENT_TARGET}/ekc.yaml" || $FORCE -eq 1 ]]; then
+      if [[ $DRYRUN -eq 1 ]]; then
+        info "[DRY-RUN] Would copy agent: ekc.yaml"
+      else
+        cp "${AGENT_SOURCE}/ekc.yaml" "${AGENT_TARGET}/ekc.yaml"
+        ok "copy agent ekc.yaml"
+      fi
+    fi
+  fi
+  if [[ -f "${AGENT_SOURCE}/ekc.md" ]]; then
+    if [[ ! -f "${AGENT_TARGET}/ekc.md" || $FORCE -eq 1 ]]; then
+      if [[ $DRYRUN -eq 1 ]]; then
+        info "[DRY-RUN] Would copy agent: ekc.md"
+      else
+        cp "${AGENT_SOURCE}/ekc.md" "${AGENT_TARGET}/ekc.md"
+        ok "copy agent ekc.md"
+      fi
+    fi
+  fi
+fi
+
 if [[ $DRYRUN -eq 0 ]]; then
   git_hash="unknown"
   if command -v git >/dev/null 2>&1; then
@@ -100,6 +167,7 @@ if [[ $DRYRUN -eq 0 ]]; then
 # Timestamp: $(date -Iseconds)
 # Git Commit: ${git_hash}
 # Total Skills: ${total}
+# Total Agents: $((AGENT_COPIED + AGENT_UPDATED + AGENT_SKIPPED))
 # DO NOT EDIT MANUALLY
 EOF
   ok "Stamp file created"
@@ -111,9 +179,15 @@ info "=================="
 info "Source:  ${SOURCE}"
 info "Target:  ${TARGET}"
 info ""
-info "Copied:   ${COPIED}"
-info "Updated:  ${UPDATED}"
-info "Skipped:  ${SKIPPED}"
+info "Skills:"
+info "  Copied:   ${COPIED}"
+info "  Updated:  ${UPDATED}"
+info "  Skipped:  ${SKIPPED}"
+info ""
+info "Agents:"
+info "  Copied:   ${AGENT_COPIED}"
+info "  Updated:  ${AGENT_UPDATED}"
+info "  Skipped:  ${AGENT_SKIPPED}"
 info ""
 
 if [[ -d "$TARGET" ]]; then

@@ -16,6 +16,9 @@ $Source = Join-Path $RepoRoot "skills"
 $Target = Join-Path (Join-Path $RepoRoot ".kimi") "skills"
 $StampFile = Join-Path $Target ".ekc-installed"
 
+$AgentSource = Join-Path $RepoRoot "agents"
+$AgentTarget = Join-Path (Join-Path $RepoRoot ".kimi") "agents"
+
 function Write-Info($msg) { if (-not $Quiet) { Write-Host $msg } }
 function Write-Ok($msg) { if (-not $Quiet) { Write-Host "  [OK] $msg" -ForegroundColor Green } }
 function Write-Warn($msg) { Write-Warning $msg }
@@ -84,6 +87,81 @@ foreach ($SkillDir in $SourceSkills) {
     Write-Ok "$Action $SkillName"
 }
 
+# Copy agents
+$AgentCopied = 0
+$AgentUpdated = 0
+$AgentSkipped = 0
+if (Test-Path $AgentSource) {
+    $SourceAgents = Get-ChildItem -Path $AgentSource -Directory | Sort-Object Name
+    foreach ($AgentDir in $SourceAgents) {
+        $AgentName = $AgentDir.Name
+        $AgentSourcePath = $AgentDir.FullName
+        $AgentDestPath = Join-Path $AgentTarget $AgentName
+        $AgentYamlSource = Join-Path $AgentSourcePath "agent.yaml"
+        $AgentMdSource = Join-Path $AgentSourcePath "agent.md"
+        $IsAgentDir = (Test-Path $AgentYamlSource) -or (Test-Path $AgentMdSource)
+
+        if (-not $IsAgentDir) {
+            continue
+        }
+
+        $AgentExists = Test-Path $AgentDestPath
+        $AgentShouldCopy = $false
+        $AgentAction = ""
+
+        if (-not $AgentExists) {
+            $AgentShouldCopy = $true
+            $AgentAction = "copy"
+        } elseif ($Force) {
+            $AgentShouldCopy = $true
+            $AgentAction = "overwrite"
+        } else {
+            $AgentSkipped++
+            continue
+        }
+
+        if ($DryRun) {
+            Write-Info "[DRY-RUN] Would ${AgentAction} agent: $AgentName"
+            if ($AgentAction -eq "copy") { $AgentCopied++ } else { $AgentUpdated++ }
+            continue
+        }
+
+        if ($AgentAction -eq "overwrite") {
+            Remove-Item -Path $AgentDestPath -Recurse -Force
+        }
+
+        Copy-Item -Path $AgentSourcePath -Destination $AgentDestPath -Recurse -Force
+        if ($AgentAction -eq "copy") { $AgentCopied++ } else { $AgentUpdated++ }
+        Write-Ok "$AgentAction agent $AgentName"
+    }
+
+    # Copy main agent files (ekc.yaml, ekc.md)
+    $MainAgentYaml = Join-Path $AgentSource "ekc.yaml"
+    $MainAgentMd = Join-Path $AgentSource "ekc.md"
+    if (Test-Path $MainAgentYaml) {
+        $MainAgentDest = Join-Path $AgentTarget "ekc.yaml"
+        if (-not (Test-Path $MainAgentDest) -or $Force) {
+            if ($DryRun) {
+                Write-Info "[DRY-RUN] Would copy agent: ekc.yaml"
+            } else {
+                Copy-Item -Path $MainAgentYaml -Destination $MainAgentDest -Force
+                Write-Ok "copy agent ekc.yaml"
+            }
+        }
+    }
+    if (Test-Path $MainAgentMd) {
+        $MainAgentMdDest = Join-Path $AgentTarget "ekc.md"
+        if (-not (Test-Path $MainAgentMdDest) -or $Force) {
+            if ($DryRun) {
+                Write-Info "[DRY-RUN] Would copy agent: ekc.md"
+            } else {
+                Copy-Item -Path $MainAgentMd -Destination $MainAgentMdDest -Force
+                Write-Ok "copy agent ekc.md"
+            }
+        }
+    }
+}
+
 if (-not $DryRun) {
     $GitHash = "unknown"
     try {
@@ -97,6 +175,7 @@ if (-not $DryRun) {
         "# Timestamp: $(Get-Date -Format o)"
         "# Git Commit: $GitHash"
         "# Total Skills: $($Copied + $Updated + $Skipped)"
+        "# Total Agents: $($AgentCopied + $AgentUpdated + $AgentSkipped)"
         "# DO NOT EDIT MANUALLY"
     ) -join "`n"
     Set-Content -Path $StampFile -Value $StampContent -Encoding utf8 -NoNewline
@@ -109,9 +188,15 @@ Write-Info "==================="
 Write-Info "Source:  $Source"
 Write-Info "Target:  $Target"
 Write-Info ""
-Write-Info "Copied:   $Copied"
-Write-Info "Updated:  $Updated"
-Write-Info "Skipped:  $Skipped"
+Write-Info "Skills:"
+Write-Info "  Copied:   $Copied"
+Write-Info "  Updated:  $Updated"
+Write-Info "  Skipped:  $Skipped"
+Write-Info ""
+Write-Info "Agents:"
+Write-Info "  Copied:   $AgentCopied"
+Write-Info "  Updated:  $AgentUpdated"
+Write-Info "  Skipped:  $AgentSkipped"
 Write-Info ""
 
 $FlowSkills = @()

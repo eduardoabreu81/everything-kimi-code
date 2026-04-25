@@ -83,6 +83,50 @@ else
   WARNINGS=$((WARNINGS + 1))
 fi
 
+AGENT_TARGET="${HOME}/.kimi/agents"
+info ""
+info "Agent Validation:"
+
+if [[ -d "$AGENT_TARGET" ]]; then
+  pass "Agents directory exists"
+else
+  fail "Agents directory not found: ${AGENT_TARGET}"
+  FAILURES=$((FAILURES + 1))
+fi
+
+if [[ -f "${AGENT_TARGET}/ekc.yaml" ]]; then
+  pass "Main agent (ekc.yaml) exists"
+else
+  fail "Main agent (ekc.yaml) not found"
+  FAILURES=$((FAILURES + 1))
+fi
+
+TOTAL_AGENTS=0
+MISSING_AGENT_FILES=0
+for agent_dir in "${AGENT_TARGET}"/*/; do
+  [[ -d "$agent_dir" ]] || continue
+  TOTAL_AGENTS=$((TOTAL_AGENTS + 1))
+  agent_md="${agent_dir}/agent.md"
+  agent_yaml="${agent_dir}/agent.yaml"
+  agent_name="$(basename "$agent_dir")"
+  if [[ ! -f "$agent_md" ]]; then
+    fail "${agent_name}: missing agent.md"
+    MISSING_AGENT_FILES=$((MISSING_AGENT_FILES + 1))
+    FAILURES=$((FAILURES + 1))
+  fi
+  if [[ ! -f "$agent_yaml" ]]; then
+    fail "${agent_name}: missing agent.yaml"
+    MISSING_AGENT_FILES=$((MISSING_AGENT_FILES + 1))
+    FAILURES=$((FAILURES + 1))
+  fi
+done
+
+if [[ $MISSING_AGENT_FILES -eq 0 ]]; then
+  pass "All ${TOTAL_AGENTS} subagents have agent.md + agent.yaml"
+else
+  fail "${MISSING_AGENT_FILES} agent file(s) missing"
+fi
+
 FLOW_NAMES=("code-review" "feature-dev" "github-code-reviewer" "pr-review")
 info ""
 info "Flow Skill Validation:"
@@ -129,6 +173,7 @@ info "=============================="
 if [[ $FAILURES -eq 0 && $WARNINGS -eq 0 ]]; then
   info "Result: ALL CHECKS PASSED"
   info "  Skills: ${TOTAL_SKILLS}"
+  info "  Agents: ${TOTAL_AGENTS}"
   info "  Flows:  4/4 valid"
 elif [[ $FAILURES -eq 0 ]]; then
   info "Result: PASSED WITH WARNINGS (${WARNINGS})"
