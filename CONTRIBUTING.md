@@ -84,6 +84,21 @@ B[Identify Language<br/>Detect the language]
 B[Identify Language - Detect the language]
 ```
 
+**Do not leave disconnected (dead) nodes in the diagram.** Every node must have an incoming edge (except BEGIN) and an outgoing edge (except END). A node with no outgoing edge causes the flow to be silently rejected by Kimi CLI.
+
+```mermaid
+# Bad — node D has no outgoing edge, flow is rejected
+C -->|No| D[Abort - Inform user]
+C -->|Yes| E[Continue]
+E --> F([END])
+
+# Good — all nodes connect to END
+C -->|No| D[Abort - Inform user]
+C -->|Yes| E[Continue]
+D --> F([END])
+E --> F([END])
+```
+
 ### Validation workflow for flow skills
 
 After editing a flow skill, run the validation script and test manually:
@@ -173,7 +188,10 @@ Run this checklist before every commit that touches skills or flows:
    ```
    For flow skills, this must return empty.
 
-6. **Review your diff**
+6. **Check for disconnected nodes in flow diagrams**
+   Run `validate-project-install.ps1` (or `.sh`) and confirm `connected=YES` and `reachable=YES` for all flows. Manually verify that every node (except BEGIN) has an incoming edge and every node (except END) has an outgoing edge.
+
+7. **Review your diff**
    ```bash
    git diff
    ```
