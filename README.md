@@ -153,6 +153,8 @@ EKC is a Kimi CLI port and adaptation of [Everything Claude Code](https://github
 
 If you want to add skills, fix flows, or improve scripts, read [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow, validation rules, and commit conventions.
 
+For versioning and release steps, see [Release Process](docs/release-process.md).
+
 ## License
 
 - **Agents, Skills, CLI, docs, templates:** MIT

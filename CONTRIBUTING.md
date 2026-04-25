@@ -247,6 +247,17 @@ Keep commits focused. One logical change per commit.
 
 ---
 
+## Releases
+
+EKC follows semantic versioning in the format `vX.Y.Z`:
+- `X` — Major changes
+- `Y` — Minor changes  
+- `Z` — Bug fixes and issue corrections
+
+The full release process — including tag creation, GitHub Release steps, and the pre-release checklist — is documented in [docs/release-process.md](docs/release-process.md).
+
+---
+
 ## Code of Conduct
 
 Be respectful and constructive. We welcome contributors from all backgrounds and experience levels.
