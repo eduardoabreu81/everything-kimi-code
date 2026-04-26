@@ -10,7 +10,7 @@ set "SCRIPT_DIR=%~dp0"
 set "REPO_ROOT=%SCRIPT_DIR%.."
 
 REM Resolve absolute path to agent file
-set "AGENT_FILE=%REPO_ROOT%\agents\ekc\agent.yaml"
+set "AGENT_FILE=%REPO_ROOT%\agents\ekc.yaml"
 
 REM Pass all arguments through to kimi with --agent-file prepended
 kimi --agent-file "%AGENT_FILE%" %*
